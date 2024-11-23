@@ -1,0 +1,28 @@
+template:
+  package: pkgdown.tpl
+url: https://gitlab.rpkg.dev
+reference:
+- title: Common
+  desc: Common functions that are of generic use.
+- contents:
+  - api_req
+  - build_url
+- title: Projects
+  desc: Functions to manage GitLab projects.
+- contents:
+  - project
+  - project_default_branch
+- title: Directories
+  desc: Functions to manage directories in GitLab projects.
+- contents: dir_ls
+- title: Files
+  desc: Functions to manage files in GitLab projects.
+- contents:
+  - file_meta
+  - file_content
+  - file_full
+  - file_write
+  - file_create
+  - file_update
+  - file_delete
+  - file_exists
