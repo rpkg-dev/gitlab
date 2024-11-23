@@ -21,8 +21,9 @@ Some of gitlab's functionality is controlled via package-specific global configu
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://gitlab.com/salim_b/r/pkgs/gitlab}
-  \item Report bugs at \url{https://gitlab.com/salim_b/r/pkgs/gitlab/issues}
+  \item \url{https://gitlab.rpkg.dev}
+  \item \url{https://gitlab.com/rpkg.dev/gitlab}
+  \item Report bugs at \url{https://gitlab.com/rpkg.dev/gitlab/issues}
 }
 
 }
