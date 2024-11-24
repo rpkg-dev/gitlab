@@ -114,26 +114,20 @@ Maximum number of attempts to retry in case of an HTTP error.</p></dd>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">gitlab</span><span class="fu">::</span><span class="fu">dir_ls</span><span class="op">(</span>id_project <span class="op">=</span> <span class="fl">64767928</span>,</span></span>
 <span class="r-in"><span>               path <span class="op">=</span> <span class="st">"man"</span>,</span></span>
 <span class="r-in"><span>               recurse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 17 × 5</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    id                                       name                      type  path                          mode  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 6dc958d6414dd9a2ee7f59876823711e09cbdf0d roxygen                   tree  man/roxygen                   040000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 9ec6cc14128019433014cc49c9cb70d729c50ebb api_req.Rd                blob  man/api_req.Rd                100644</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 33f5ecf9b6bf8d7caa2ef1fabdfd3a0130165fc1 build_url.Rd              blob  man/build_url.Rd              100644</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> d75193fa07313559f7dc146c7a27a9a4e6e2f04e dir_ls.Rd                 blob  man/dir_ls.Rd                 100644</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 1bc528df4eadf1eda2134a020479054ca1f658b5 file_content.Rd           blob  man/file_content.Rd           100644</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 306f0961cea3ec92b8100e7fe93f7b6ff06314a8 file_create.Rd            blob  man/file_create.Rd            100644</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> bab487d2bd22a8a4ebfa913ec4092baedcf385fa file_delete.Rd            blob  man/file_delete.Rd            100644</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> b9565b8280dedd10c3fc2585d67b07dfb4ab687e file_exists.Rd            blob  man/file_exists.Rd            100644</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> b4803cfd4fd542c8eaa91bc853d94117a9e4cba2 file_full.Rd              blob  man/file_full.Rd              100644</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 996b310b0a48384c42577ed9dc1d95bdd75bd44c file_meta.Rd              blob  man/file_meta.Rd              100644</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> 67986dc18b4d625e0a61ee62ba15846b840119b6 file_req.Rd               blob  man/file_req.Rd               100644</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> 8b2356a76628a46fb59b19c725cc22916362ddae file_update.Rd            blob  man/file_update.Rd            100644</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> 7dd90d49713fba0f2c9b6aac93b93112e9e51e81 file_write.Rd             blob  man/file_write.Rd             100644</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> 270c9ee277934fc62cf186d93173d74c0c017849 gitlab-package.Rd         blob  man/gitlab-package.Rd         100644</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span> 23bb4905235de70fe036a97c19343a6afb1bd46d project.Rd                blob  man/project.Rd                100644</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">16</span> 28f41c020ce4be39d425fd1b9ea91cbf1cb43d25 project_default_branch.Rd blob  man/project_default_branch.Rd 100644</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">17</span> bbda19aaf6dbe500ef344a79b327dcf66953587f meta.R                    blob  man/roxygen/meta.R            100644</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 21 × 5</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    id                                       name                  type  path                      mode  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 0eac40f6eba506fdd4e71c3ecd05cbc96f886598 roxygen               tree  man/roxygen               040000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 9ec6cc14128019433014cc49c9cb70d729c50ebb api_req.Rd            blob  man/api_req.Rd            100644</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> b8082bc2a9e4591aad90304f9d22bfceaafe5e6c build_url.Rd          blob  man/build_url.Rd          100644</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 5daa8ce07529bcd2904b4ff6528b266b6d32c353 commit_files.Rd       blob  man/commit_files.Rd       100644</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 1f2838ca53f25e157e7601bc385059d1f99a1dae dir_delete.Rd         blob  man/dir_delete.Rd         100644</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 04ce8bc217ca094614708cc5cd0f7880a2f0322f dir_ls.Rd             blob  man/dir_ls.Rd             100644</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 1d632247987917b16b93e981eb2092d6f4dbc4aa file_commit_action.Rd blob  man/file_commit_action.Rd 100644</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 7f6a1cf38c9c7642126a75c2e1c853fc7e2a4512 file_content.Rd       blob  man/file_content.Rd       100644</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 1cb23be95425a4da228ac460013a7e0b469f116e file_create.Rd        blob  man/file_create.Rd        100644</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> e885012ddc598c9ff923837e6e338211aa2c7238 file_delete.Rd        blob  man/file_delete.Rd        100644</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 11 more rows</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

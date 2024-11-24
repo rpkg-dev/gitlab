@@ -53,7 +53,8 @@ Assembles the HTTP request structure that is common to \emph{all} GitLab v4 REST
 \examples{
 gitlab:::file_req(method = "HEAD",
                   path = "README.md",
-                  id_project = 64767928)
+                  id_project = 64767928,
+                  ref = "HEAD")
 }
 \seealso{
 Other file management functions:

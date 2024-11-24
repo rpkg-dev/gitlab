@@ -393,7 +393,8 @@ Functions to manage files in GitLab projects.
 #' @examples
 #' gitlab:::file_req(method = "HEAD",
 #'                   path = "README.md",
-#'                   id_project = 64767928)
+#'                   id_project = 64767928,
+#'                   ref = "HEAD")
 file_req <- function(method,
                      path,
                      id_project = pal::pkg_config_val("id_project"),
@@ -479,6 +480,12 @@ file_meta <- function(path,
 ```
 
 ### `file_content`
+
+TODO:
+
+-   Implement pkgpins-based caching like `fokus::read_private_file()` has. In contrast to `httr2::req_cache()`, this allows to cache based on the
+    `X-Gitlab-Content-Sha256` header instead of just `Etag` (which changes after every commit, regardless of actual content changes). Even better would be to
+    add a `header` param to `httr2::req_cache()` to allow choosing the HTTP header name(s) to consider.
 
 ```{r}
 #' Read in file from GitLab repository

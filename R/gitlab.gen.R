@@ -328,7 +328,8 @@ dir_delete <- function(path,
 #' @examples
 #' gitlab:::file_req(method = "HEAD",
 #'                   path = "README.md",
-#'                   id_project = 64767928)
+#'                   id_project = 64767928,
+#'                   ref = "HEAD")
 file_req <- function(method,
                      path,
                      id_project = pal::pkg_config_val("id_project"),
