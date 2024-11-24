@@ -5,14 +5,14 @@
 \title{GitLab project default branch}
 \usage{
 project_default_branch(
-  id_proj,
+  id_project = pal::pkg_config_val("id_project"),
   base_url = pal::pkg_config_val("base_url"),
   token = pal::pkg_config_val("token"),
   max_tries = 3L
 )
 }
 \arguments{
-\item{id_proj}{\code{\link[base:integer]{integer(1)}}\cr
+\item{id_project}{\code{\link[base:integer]{integer(1)}}\cr
 GitLab project identifier.}
 
 \item{base_url}{\code{\link[base:character]{character(1)}}\cr
@@ -32,7 +32,7 @@ A character scalar.
 Determines a GitLab project's default Git branch name.
 }
 \examples{
-gitlab::project_default_branch(id_proj = 64767928)
+gitlab::project_default_branch(id_project = 64767928)
 }
 \seealso{
 Other common functions:

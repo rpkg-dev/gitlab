@@ -6,8 +6,8 @@
 \usage{
 file_exists(
   path,
-  id_proj,
-  ref = NULL,
+  id_project = pal::pkg_config_val("id_project"),
+  ref = "HEAD",
   base_url = pal::pkg_config_val("base_url"),
   token = pal::pkg_config_val("token"),
   max_tries = 3L
@@ -17,7 +17,7 @@ file_exists(
 \item{path}{\code{\link[base:character]{character(1)}}\cr
 File path, relative to the repository root.}
 
-\item{id_proj}{\code{\link[base:integer]{integer(1)}}\cr
+\item{id_project}{\code{\link[base:integer]{integer(1)}}\cr
 GitLab project identifier.}
 
 \item{ref}{\code{\link[base:character]{character(1)}}\cr
@@ -46,13 +46,15 @@ Tests whether or not a file exists in a GitLab repository.
 }
 \examples{
 gitlab::file_exists(path = "README.md",
-                    id_proj = 64767928)
+                    id_project = 64767928)
 
 gitlab::file_exists(path = "test.md",
-                    id_proj = 64767928)
+                    id_project = 64767928)
 }
 \seealso{
 Other file management functions:
+\code{\link{commit_files}()},
+\code{\link{file_commit_action}()},
 \code{\link{file_content}()},
 \code{\link{file_create}()},
 \code{\link{file_delete}()},
@@ -60,6 +62,7 @@ Other file management functions:
 \code{\link{file_meta}()},
 \code{\link{file_req}()},
 \code{\link{file_update}()},
-\code{\link{file_write}()}
+\code{\link{file_write}()},
+\code{\link{files_delete}()}
 }
 \concept{files}

@@ -5,14 +5,14 @@
 \title{GitLab project metadata}
 \usage{
 project(
-  id_proj,
+  id_project = pal::pkg_config_val("id_project"),
   base_url = pal::pkg_config_val("base_url"),
   token = pal::pkg_config_val("token"),
   max_tries = 3L
 )
 }
 \arguments{
-\item{id_proj}{\code{\link[base:integer]{integer(1)}}\cr
+\item{id_project}{\code{\link[base:integer]{integer(1)}}\cr
 GitLab project identifier.}
 
 \item{base_url}{\code{\link[base:character]{character(1)}}\cr
@@ -29,11 +29,11 @@ Maximum number of attempts to retry in case of an HTTP error.}
 A list.
 }
 \description{
-Retrieves a GitLab project's metadata via the \href{https://docs.gitlab.com/ee/api/projects.html#get-a-single-project}{\code{GET /projects/{id_proj}}} endpoint of
+Retrieves a GitLab project's metadata via the \href{https://docs.gitlab.com/ee/api/projects.html#get-a-single-project}{\code{GET /projects/{id_project}}} endpoint of
 GitLab's v4 RESTful API.
 }
 \examples{
-gitlab::project(id_proj = 64767928)
+gitlab::project(id_project = 64767928)
 }
 \seealso{
 Other common functions:

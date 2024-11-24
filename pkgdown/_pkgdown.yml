@@ -14,7 +14,9 @@ reference:
   - project_default_branch
 - title: Directories
   desc: Functions to manage directories in GitLab projects.
-- contents: dir_ls
+- contents:
+  - dir_ls
+  - dir_delete
 - title: Files
   desc: Functions to manage files in GitLab projects.
 - contents:
@@ -25,4 +27,9 @@ reference:
   - file_create
   - file_update
   - file_delete
+  - files_delete
   - file_exists
+- title: Commits
+- contents:
+  - commit_files
+  - file_commit_action

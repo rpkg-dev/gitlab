@@ -4,7 +4,10 @@
 <url><loc>https://gitlab.rpkg.dev/dev/index.html</loc></url>
 <url><loc>https://gitlab.rpkg.dev/dev/reference/api_req.html</loc></url>
 <url><loc>https://gitlab.rpkg.dev/dev/reference/build_url.html</loc></url>
+<url><loc>https://gitlab.rpkg.dev/dev/reference/commit_files.html</loc></url>
+<url><loc>https://gitlab.rpkg.dev/dev/reference/dir_delete.html</loc></url>
 <url><loc>https://gitlab.rpkg.dev/dev/reference/dir_ls.html</loc></url>
+<url><loc>https://gitlab.rpkg.dev/dev/reference/file_commit_action.html</loc></url>
 <url><loc>https://gitlab.rpkg.dev/dev/reference/file_content.html</loc></url>
 <url><loc>https://gitlab.rpkg.dev/dev/reference/file_create.html</loc></url>
 <url><loc>https://gitlab.rpkg.dev/dev/reference/file_delete.html</loc></url>
@@ -14,6 +17,7 @@
 <url><loc>https://gitlab.rpkg.dev/dev/reference/file_req.html</loc></url>
 <url><loc>https://gitlab.rpkg.dev/dev/reference/file_update.html</loc></url>
 <url><loc>https://gitlab.rpkg.dev/dev/reference/file_write.html</loc></url>
+<url><loc>https://gitlab.rpkg.dev/dev/reference/files_delete.html</loc></url>
 <url><loc>https://gitlab.rpkg.dev/dev/reference/gitlab-package.html</loc></url>
 <url><loc>https://gitlab.rpkg.dev/dev/reference/index.html</loc></url>
 <url><loc>https://gitlab.rpkg.dev/dev/reference/project.html</loc></url>

@@ -7,7 +7,7 @@
 file_req(
   method,
   path,
-  id_proj,
+  id_project = pal::pkg_config_val("id_project"),
   ref = NULL,
   body_json = NULL,
   base_url = pal::pkg_config_val("base_url"),
@@ -23,7 +23,7 @@ One of \code{"GET"}, \code{"CONNECT"}, \code{"DELETE"}, \code{"HEAD"}, \code{"OP
 \item{path}{\code{\link[base:character]{character(1)}}\cr
 File path, relative to the repository root.}
 
-\item{id_proj}{\code{\link[base:integer]{integer(1)}}\cr
+\item{id_project}{\code{\link[base:integer]{integer(1)}}\cr
 GitLab project identifier.}
 
 \item{ref}{\code{\link[base:character]{character(1)}}\cr
@@ -51,12 +51,14 @@ httr2::req_method return
 Assembles the HTTP request structure that is common to \emph{all} GitLab v4 RESTful API requests to manage files performed by this package.
 }
 \examples{
-gitlab::file_req(method = "HEAD",
-                 path = "README.md",
-                 id_proj = 64767928)
+gitlab:::file_req(method = "HEAD",
+                  path = "README.md",
+                  id_project = 64767928)
 }
 \seealso{
 Other file management functions:
+\code{\link{commit_files}()},
+\code{\link{file_commit_action}()},
 \code{\link{file_content}()},
 \code{\link{file_create}()},
 \code{\link{file_delete}()},
@@ -64,7 +66,8 @@ Other file management functions:
 \code{\link{file_full}()},
 \code{\link{file_meta}()},
 \code{\link{file_update}()},
-\code{\link{file_write}()}
+\code{\link{file_write}()},
+\code{\link{files_delete}()}
 }
 \concept{files}
 \keyword{internal}

@@ -6,9 +6,9 @@
 \usage{
 file_delete(
   path,
-  id_proj,
-  start_branch = project_default_branch(id_proj = id_proj, base_url = base_url, token =
-    token, max_tries = max_tries),
+  id_project = pal::pkg_config_val("id_project"),
+  start_branch = project_default_branch(id_project = id_project, base_url = base_url,
+    token = token, max_tries = max_tries),
   branch = start_branch,
   commit_message = "auto: delete file via gitlab R pkg",
   author_email = NULL,
@@ -23,7 +23,7 @@ file_delete(
 \item{path}{\code{\link[base:character]{character(1)}}\cr
 File path, relative to the repository root.}
 
-\item{id_proj}{\code{\link[base:integer]{integer(1)}}\cr
+\item{id_project}{\code{\link[base:integer]{integer(1)}}\cr
 GitLab project identifier.}
 
 \item{start_branch}{\code{\link[base:character]{character(1)}}\cr
@@ -60,16 +60,18 @@ Maximum number of attempts to retry in case of an HTTP error.}
 }
 \description{
 Deletes a file from a GitLab repository via the
-\href{https://docs.gitlab.com/ee/api/repository_files.html#delete-existing-file-in-repository}{\code{DELETE /projects/{id}/repository/files/{path}}} endpoint of
+\href{https://docs.gitlab.com/ee/api/repository_files.html#delete-existing-file-in-repository}{\code{DELETE /projects/{id_project}/repository/files/{path}}} endpoint of
 GitLab's v4 RESTful API.
 }
 \examples{
 \dontrun{
 gitlab::file_delete(path = "test.md",
-                    id_proj = 64767928)}
+                    id_project = 64767928)}
 }
 \seealso{
 Other file management functions:
+\code{\link{commit_files}()},
+\code{\link{file_commit_action}()},
 \code{\link{file_content}()},
 \code{\link{file_create}()},
 \code{\link{file_exists}()},
@@ -77,6 +79,7 @@ Other file management functions:
 \code{\link{file_meta}()},
 \code{\link{file_req}()},
 \code{\link{file_update}()},
-\code{\link{file_write}()}
+\code{\link{file_write}()},
+\code{\link{files_delete}()}
 }
 \concept{files}

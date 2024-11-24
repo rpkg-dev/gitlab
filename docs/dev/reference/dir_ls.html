@@ -48,11 +48,11 @@ GET /projects/:id/repository/tree endpoint of GitLab's v4 RESTful API."><meta na
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">dir_ls</span><span class="op">(</span></span>
-<span>  <span class="va">id_proj</span>,</span>
 <span>  path <span class="op">=</span> <span class="st">""</span>,</span>
-<span>  recursive <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  ref <span class="op">=</span> <span class="fu"><a href="project_default_branch.html">project_default_branch</a></span><span class="op">(</span>id_proj <span class="op">=</span> <span class="va">id_proj</span>, base_url <span class="op">=</span> <span class="va">base_url</span>, token <span class="op">=</span> <span class="va">token</span>,</span>
-<span>    max_tries <span class="op">=</span> <span class="va">max_tries</span><span class="op">)</span>,</span>
+<span>  id_project <span class="op">=</span> <span class="fu">pal</span><span class="fu">::</span><span class="fu"><a href="https://pal.rpkg.dev/reference/pkg_config_val.html" class="external-link">pkg_config_val</a></span><span class="op">(</span><span class="st">"id_project"</span><span class="op">)</span>,</span>
+<span>  recurse <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  ref <span class="op">=</span> <span class="fu"><a href="project_default_branch.html">project_default_branch</a></span><span class="op">(</span>id_project <span class="op">=</span> <span class="va">id_project</span>, base_url <span class="op">=</span> <span class="va">base_url</span>, token <span class="op">=</span></span>
+<span>    <span class="va">token</span>, max_tries <span class="op">=</span> <span class="va">max_tries</span><span class="op">)</span>,</span>
 <span>  base_url <span class="op">=</span> <span class="fu">pal</span><span class="fu">::</span><span class="fu"><a href="https://pal.rpkg.dev/reference/pkg_config_val.html" class="external-link">pkg_config_val</a></span><span class="op">(</span><span class="st">"base_url"</span><span class="op">)</span>,</span>
 <span>  token <span class="op">=</span> <span class="fu">pal</span><span class="fu">::</span><span class="fu"><a href="https://pal.rpkg.dev/reference/pkg_config_val.html" class="external-link">pkg_config_val</a></span><span class="op">(</span><span class="st">"token"</span><span class="op">)</span>,</span>
 <span>  max_tries <span class="op">=</span> <span class="fl">3L</span></span>
@@ -63,17 +63,17 @@ GET /projects/:id/repository/tree endpoint of GitLab's v4 RESTful API."><meta na
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-id-proj">id_proj<a class="anchor" aria-label="anchor" href="#arg-id-proj"></a></dt>
-<dd><p><code><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer(1)</a></code><br>
-GitLab project identifier.</p></dd>
-
-
-<dt id="arg-path">path<a class="anchor" aria-label="anchor" href="#arg-path"></a></dt>
+<dl><dt id="arg-path">path<a class="anchor" aria-label="anchor" href="#arg-path"></a></dt>
 <dd><p><code><a href="https://rdrr.io/r/base/character.html" class="external-link">character(1)</a></code><br>
 Directory path, relative to the repository root.</p></dd>
 
 
-<dt id="arg-recursive">recursive<a class="anchor" aria-label="anchor" href="#arg-recursive"></a></dt>
+<dt id="arg-id-project">id_project<a class="anchor" aria-label="anchor" href="#arg-id-project"></a></dt>
+<dd><p><code><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer(1)</a></code><br>
+GitLab project identifier.</p></dd>
+
+
+<dt id="arg-recurse">recurse<a class="anchor" aria-label="anchor" href="#arg-recurse"></a></dt>
 <dd><p><code><a href="https://rdrr.io/r/base/logical.html" class="external-link">logical(1)</a></code><br>
 Whether or not to recurse into subdirectories of <code>path</code>.</p></dd>
 
@@ -103,12 +103,17 @@ Maximum number of attempts to retry in case of an HTTP error.</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A <a href="https://tibble.tidyverse.org/reference/tbl_df-class.html" class="external-link">tibble</a>.</p>
     </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p>Other directory management functions:
+<code><a href="dir_delete.html">dir_delete</a>()</code></p></div>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">gitlab</span><span class="fu">::</span><span class="fu">dir_ls</span><span class="op">(</span>id_proj <span class="op">=</span> <span class="fl">64767928</span>,</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">gitlab</span><span class="fu">::</span><span class="fu">dir_ls</span><span class="op">(</span>id_project <span class="op">=</span> <span class="fl">64767928</span>,</span></span>
 <span class="r-in"><span>               path <span class="op">=</span> <span class="st">"man"</span>,</span></span>
-<span class="r-in"><span>               recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>               recurse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 17 × 5</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    id                                       name                      type  path                          mode  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span>
@@ -125,7 +130,7 @@ Maximum number of attempts to retry in case of an HTTP error.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> 67986dc18b4d625e0a61ee62ba15846b840119b6 file_req.Rd               blob  man/file_req.Rd               100644</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> 8b2356a76628a46fb59b19c725cc22916362ddae file_update.Rd            blob  man/file_update.Rd            100644</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> 7dd90d49713fba0f2c9b6aac93b93112e9e51e81 file_write.Rd             blob  man/file_write.Rd             100644</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> bea606fd667ef4aa2369962ada62c806cfd10953 gitlab-package.Rd         blob  man/gitlab-package.Rd         100644</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> 270c9ee277934fc62cf186d93173d74c0c017849 gitlab-package.Rd         blob  man/gitlab-package.Rd         100644</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span> 23bb4905235de70fe036a97c19343a6afb1bd46d project.Rd                blob  man/project.Rd                100644</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">16</span> 28f41c020ce4be39d425fd1b9ea91cbf1cb43d25 project_default_branch.Rd blob  man/project_default_branch.Rd 100644</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">17</span> bbda19aaf6dbe500ef344a79b327dcf66953587f meta.R                    blob  man/roxygen/meta.R            100644</span>

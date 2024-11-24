@@ -6,7 +6,7 @@
 \usage{
 file_content(
   path,
-  id_proj,
+  id_project = pal::pkg_config_val("id_project"),
   ref = NULL,
   base_url = pal::pkg_config_val("base_url"),
   token = pal::pkg_config_val("token"),
@@ -17,7 +17,7 @@ file_content(
 \item{path}{\code{\link[base:character]{character(1)}}\cr
 File path, relative to the repository root.}
 
-\item{id_proj}{\code{\link[base:integer]{integer(1)}}\cr
+\item{id_project}{\code{\link[base:integer]{integer(1)}}\cr
 GitLab project identifier.}
 
 \item{ref}{\code{\link[base:character]{character(1)}}\cr
@@ -40,16 +40,18 @@ A character scalar if \code{path} refers to a text file, otherwise a raw vector.
 }
 \description{
 Downloads a file from a GitLab repository via the
-\href{https://docs.gitlab.com/ee/api/repository_files.html#get-raw-file-from-repository}{\code{GET /projects/{id}/repository/files/{path}/raw}} endpoint of GitLab's v4
-RESTful API and returns its content.
+\href{https://docs.gitlab.com/ee/api/repository_files.html#get-raw-file-from-repository}{\code{GET /projects/{id_project}/repository/files/{path}/raw}} endpoint of
+GitLab's v4 RESTful API and returns its content.
 }
 \examples{
 gitlab::file_content(path = "DESCRIPTION",
-                     id_proj = 64767928) |>
+                     id_project = 64767928) |>
   cat()
 }
 \seealso{
 Other file management functions:
+\code{\link{commit_files}()},
+\code{\link{file_commit_action}()},
 \code{\link{file_create}()},
 \code{\link{file_delete}()},
 \code{\link{file_exists}()},
@@ -57,6 +59,7 @@ Other file management functions:
 \code{\link{file_meta}()},
 \code{\link{file_req}()},
 \code{\link{file_update}()},
-\code{\link{file_write}()}
+\code{\link{file_write}()},
+\code{\link{files_delete}()}
 }
 \concept{files}

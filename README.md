@@ -6,7 +6,7 @@ Allows to conveniently work with GitLab’s v4 RESTful API from R. GitLab (https
 
 ## Documentation
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/FIX-ME/deploy-status)](https://app.netlify.com/sites/FIX-ME-rpkg-dev/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/3a09179f-b2d1-4860-bc1d-318a9fb48d1c/deploy-status)](https://app.netlify.com/sites/gitlab-rpkg-dev/deploys)
 
 The documentation of this package is found [here](https://gitlab.rpkg.dev).
 
@@ -28,10 +28,11 @@ remotes::install_gitlab(repo = "rpkg.dev/gitlab")
 Some of gitlab’s functionality is controlled via package-specific global configuration which can either be set via [R options](https://rdrr.io/r/base/options.html) or [environment variables](https://en.wikipedia.org/wiki/Environment_variable) (the former take precedence). This configuration includes:
 
 ::: table-wide
-| **Description**                                                                                                                                                                                                                                                                                                    | **R option**      | **Environment variable** | **Default value**                |
-|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:------------------|:-------------------------|:---------------------------------|
-| Base URL of the GitLab v4 RESTful API server to be accessed when `base_url` is not explicitly provided to the functions of this package.                                                                                                                                                                           | `gitlab.base_url` | `R_GITLAB_BASE_URL`      | `"https://gitlab.com/api/v4"`    |
-| [GitLab access token](https://docs.gitlab.com/ee/api/rest/authentication.html) used for authentication when `token` isnot explicitly provided to the functions of this package. A personal access token for gitlab.com can be created under[this link](https://gitlab.com/-/user_settings/personal_access_tokens). | `gitlab.token`    | `R_GITLAB_TOKEN`         | `Sys.getenv("GITLAB_COM_TOKEN")` |
+| **Description**                                                                                                                                                                                                                                                                                                    | **R option**        | **Environment variable** | **Default value**                |
+|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:--------------------|:-------------------------|:---------------------------------|
+| Base URL of the GitLab v4 RESTful API server to be accessed when `base_url` is not explicitly provided to the functions of this package.                                                                                                                                                                           | `gitlab.base_url`   | `R_GITLAB_BASE_URL`      | `"https://gitlab.com/api/v4"`    |
+| GitLab project identifier to use when `id_project` is not explicitly provided to the functions of this package.                                                                                                                                                                                                    | `gitlab.id_project` | `R_GITLAB_ID_PROJECT`    |                                  |
+| [GitLab access token](https://docs.gitlab.com/ee/api/rest/authentication.html) used for authentication when `token` isnot explicitly provided to the functions of this package. A personal access token for gitlab.com can be created under[this link](https://gitlab.com/-/user_settings/personal_access_tokens). | `gitlab.token`      | `R_GITLAB_TOKEN`         | `Sys.getenv("GITLAB_COM_TOKEN")` |
 :::
 
 ## Development

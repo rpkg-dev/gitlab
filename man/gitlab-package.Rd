@@ -14,6 +14,7 @@ Allows to conveniently work with GitLab's v4 RESTful API from R. GitLab (https:/
 Some of gitlab's functionality is controlled via package-specific global configuration which can either be set via \href{https://rdrr.io/r/base/options.html}{R options} or \href{https://en.wikipedia.org/wiki/Environment_variable}{environment variables} (the former take precedence). This configuration includes:\tabular{llll}{
    \strong{Description} \tab \strong{R option} \tab \strong{Environment variable} \tab \strong{Default value} \cr
    Base URL of the GitLab v4 RESTful API server to be accessed when \code{base_url} is not explicitly provided to the functions of this package. \tab \code{gitlab.base_url} \tab \code{R_GITLAB_BASE_URL} \tab \code{"https://gitlab.com/api/v4"} \cr
+   GitLab project identifier to use when \code{id_project} is not explicitly provided to the functions of this package. \tab \code{gitlab.id_project} \tab \code{R_GITLAB_ID_PROJECT} \tab  \cr
    \href{https://docs.gitlab.com/ee/api/rest/authentication.html}{GitLab access token} used for authentication when \code{token} isnot explicitly provided to the functions of this package. A personal access token for gitlab.com can be created under\href{https://gitlab.com/-/user_settings/personal_access_tokens}{this link}. \tab \code{gitlab.token} \tab \code{R_GITLAB_TOKEN} \tab \code{Sys.getenv("GITLAB_COM_TOKEN")} \cr
 }
 }

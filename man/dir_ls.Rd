@@ -5,24 +5,24 @@
 \title{List files and directories in GitLab repository}
 \usage{
 dir_ls(
-  id_proj,
   path = "",
-  recursive = FALSE,
-  ref = project_default_branch(id_proj = id_proj, base_url = base_url, token = token,
-    max_tries = max_tries),
+  id_project = pal::pkg_config_val("id_project"),
+  recurse = FALSE,
+  ref = project_default_branch(id_project = id_project, base_url = base_url, token =
+    token, max_tries = max_tries),
   base_url = pal::pkg_config_val("base_url"),
   token = pal::pkg_config_val("token"),
   max_tries = 3L
 )
 }
 \arguments{
-\item{id_proj}{\code{\link[base:integer]{integer(1)}}\cr
-GitLab project identifier.}
-
 \item{path}{\code{\link[base:character]{character(1)}}\cr
 Directory path, relative to the repository root.}
 
-\item{recursive}{\code{\link[base:logical]{logical(1)}}\cr
+\item{id_project}{\code{\link[base:integer]{integer(1)}}\cr
+GitLab project identifier.}
+
+\item{recurse}{\code{\link[base:logical]{logical(1)}}\cr
 Whether or not to recurse into subdirectories of \code{path}.}
 
 \item{ref}{\code{\link[base:character]{character(1)}}\cr
@@ -48,8 +48,12 @@ Lists file and directory names found under the specified path in a GitLab reposi
 \href{https://docs.gitlab.com/ee/api/repositories.html#list-repository-tree}{\verb{GET /projects/:id/repository/tree}} endpoint of GitLab's v4 RESTful API.
 }
 \examples{
-gitlab::dir_ls(id_proj = 64767928,
+gitlab::dir_ls(id_project = 64767928,
                path = "man",
-               recursive = TRUE)
+               recurse = TRUE)
+}
+\seealso{
+Other directory management functions:
+\code{\link{dir_delete}()}
 }
 \concept{dirs}

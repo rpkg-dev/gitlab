@@ -5,7 +5,7 @@
 \title{Build GitLab repository URL}
 \usage{
 build_url(
-  id_proj,
+  id_project = pal::pkg_config_val("id_project"),
   ...,
   ref = NULL,
   force_branch_ref = FALSE,
@@ -15,7 +15,7 @@ build_url(
 )
 }
 \arguments{
-\item{id_proj}{\code{\link[base:integer]{integer(1)}}\cr
+\item{id_project}{\code{\link[base:integer]{integer(1)}}\cr
 GitLab project identifier.}
 
 \item{...}{\code{\link[base:character]{character()}}\cr
@@ -46,7 +46,7 @@ A character scalar.
 Assembles the URL to the specified repository path for GitLab's web interface.
 }
 \examples{
-gitlab::build_url(id_proj = 64767928,
+gitlab::build_url(id_project = 64767928,
                   "Rmd/gitlab.Rmd")
 }
 \seealso{

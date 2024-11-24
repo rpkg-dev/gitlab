@@ -7,9 +7,9 @@
 file_write(
   content,
   path,
-  id_proj,
-  start_branch = project_default_branch(id_proj = id_proj, base_url = base_url, token =
-    token, max_tries = max_tries),
+  id_project = pal::pkg_config_val("id_project"),
+  start_branch = project_default_branch(id_project = id_project, base_url = base_url,
+    token = token, max_tries = max_tries),
   branch = start_branch,
   from_file = FALSE,
   overwrite = TRUE,
@@ -18,8 +18,8 @@ file_write(
   author_email = NULL,
   author_name = NULL,
   execute_filemode = FALSE,
-  last_commit_id = file_meta(path = path, attribute = "last_commit_id", id_proj =
-    id_proj, ref = branch, base_url = base_url, token = token, max_tries = max_tries),
+  last_commit_id = file_meta(path = path, attribute = "last_commit_id", id_project =
+    id_project, ref = branch, base_url = base_url, token = token, max_tries = max_tries),
   base_url = pal::pkg_config_val("base_url"),
   token = pal::pkg_config_val("token"),
   max_tries = 3L,
@@ -34,7 +34,7 @@ File content, as a character scalar for text files, or a raw vector for binary f
 \item{path}{\code{\link[base:character]{character(1)}}\cr
 File path, relative to the repository root.}
 
-\item{id_proj}{\code{\link[base:integer]{integer(1)}}\cr
+\item{id_project}{\code{\link[base:integer]{integer(1)}}\cr
 GitLab project identifier.}
 
 \item{start_branch}{\code{\link[base:character]{character(1)}}\cr
@@ -62,7 +62,7 @@ Git commit author's email address. \code{NULL} means to default to the \code{tok
 Git commit author's name. \code{NULL} means to default to the \code{token} owner.}
 
 \item{execute_filemode}{\code{\link[base:logical]{logical(1)}}\cr
-Whether or not to mark the uploaded file as executable,}
+Whether or not to mark the uploaded file as executable.}
 
 \item{last_commit_id}{\code{\link[base:character]{character(1)}}\cr
 Last known file commit identifier. If provided (and valid), GitLab won't write to the file if a commit made after \code{last_commit_id} has modified the file.
@@ -96,10 +96,12 @@ writes are part of a controlled, single-user process where concurrency is not a 
 \dontrun{
 gitlab::file_write(content = "a line of text",
                    path = "test.md",
-                   id_proj = 64767928)}
+                   id_project = 64767928)}
 }
 \seealso{
 Other file management functions:
+\code{\link{commit_files}()},
+\code{\link{file_commit_action}()},
 \code{\link{file_content}()},
 \code{\link{file_create}()},
 \code{\link{file_delete}()},
@@ -107,6 +109,7 @@ Other file management functions:
 \code{\link{file_full}()},
 \code{\link{file_meta}()},
 \code{\link{file_req}()},
-\code{\link{file_update}()}
+\code{\link{file_update}()},
+\code{\link{files_delete}()}
 }
 \concept{files}
