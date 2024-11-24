@@ -32,6 +32,9 @@ pkg_config <-
                   require = TRUE,
                   description = paste0("Base URL of the GitLab v4 RESTful API server to be accessed when `base_url` is not explicitly provided to the ",
                                        "functions of this package.")) |>
+  tibble::add_row(key = "id_project",
+                  require = TRUE,
+                  description = "GitLab project identifier to use when `id_project` is not explicitly provided to the functions of this package.") |>
   tibble::add_row(key = "token",
                   default_value_dynamic = 'Sys.getenv("GITLAB_COM_TOKEN")',
                   require = FALSE,

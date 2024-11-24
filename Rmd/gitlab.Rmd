@@ -132,9 +132,9 @@ NOTES:
 #' @export
 #'
 #' @examples
-#' gitlab::build_url(id_proj = 64767928,
+#' gitlab::build_url(id_project = 64767928,
 #'                   "Rmd/gitlab.Rmd")
-build_url <- function(id_proj,
+build_url <- function(id_project = pal::pkg_config_val("id_project"),
                       ...,
                       ref = NULL,
                       force_branch_ref = FALSE,
@@ -150,7 +150,7 @@ build_url <- function(id_proj,
     ref <- "HEAD"
   }
   
-  project(id_proj = id_proj,
+  project(id_project = id_project,
           base_url = base_url,
           token = token,
           max_tries = max_tries) |>
@@ -176,11 +176,11 @@ NOTES:
 ```{r}
 #' GitLab project metadata
 #'
-#' Retrieves a GitLab project's metadata via the [`GET /projects/{id_proj}`](https://docs.gitlab.com/ee/api/projects.html#get-a-single-project) endpoint of
+#' Retrieves a GitLab project's metadata via the [`GET /projects/{id_project}`](https://docs.gitlab.com/ee/api/projects.html#get-a-single-project) endpoint of
 #' GitLab's v4 RESTful API.
 #'
 #' @inheritParams api_req
-#' @param id_proj `r pkgsnip::type("int", 1L)`
+#' @param id_project `r pkgsnip::type("int", 1L)`
 #'   GitLab project identifier.
 #'
 #' @return A list.
@@ -188,13 +188,15 @@ NOTES:
 #' @export
 #'
 #' @examples
-#' gitlab::project(id_proj = 64767928)
-project <- function(id_proj,
+#' gitlab::project(id_project = 64767928)
+project <- function(id_project = pal::pkg_config_val("id_project"),
                     base_url = pal::pkg_config_val("base_url"),
                     token = pal::pkg_config_val("token"),
                     max_tries = 3L) {
   
-  api_req(path = glue::glue("/projects/{id_proj}"),
+  checkmate::assert_int(id_project)
+  
+  api_req(path = glue::glue("/projects/{id_project}"),
           method = "GET",
           base_url = base_url,
           token = token,
@@ -218,12 +220,12 @@ project <- function(id_proj,
 #' @export
 #'
 #' @examples
-#' gitlab::project_default_branch(id_proj = 64767928)
-project_default_branch <- function(id_proj,
+#' gitlab::project_default_branch(id_project = 64767928)
+project_default_branch <- function(id_project = pal::pkg_config_val("id_project"),
                                    base_url = pal::pkg_config_val("base_url"),
                                    token = pal::pkg_config_val("token"),
                                    max_tries = 3L) {
-  project(id_proj = id_proj,
+  project(id_project = id_project,
           base_url = base_url,
           token = token,
           max_tries = max_tries) |>
@@ -250,7 +252,7 @@ Functions to manage directories in GitLab projects.
 #' @inheritParams file_req
 #' @param path `r pkgsnip::type("chr", 1L)`
 #'   Directory path, relative to the repository root.
-#' @param recursive `r pkgsnip::type("lgl", 1L)`
+#' @param recurse `r pkgsnip::type("lgl", 1L)`
 #'   Whether or not to recurse into subdirectories of `path`.
 #'
 #' @return `r pkgsnip::return_lbl("tibble")`
@@ -258,13 +260,13 @@ Functions to manage directories in GitLab projects.
 #' @export
 #'
 #' @examples
-#' gitlab::dir_ls(id_proj = 64767928,
+#' gitlab::dir_ls(id_project = 64767928,
 #'                path = "man",
-#'                recursive = TRUE)
-dir_ls <- function(id_proj,
-                   path = "",
-                   recursive = FALSE,
-                   ref = project_default_branch(id_proj = id_proj,
+#'                recurse = TRUE)
+dir_ls <- function(path = "",
+                   id_project = pal::pkg_config_val("id_project"),
+                   recurse = FALSE,
+                   ref = project_default_branch(id_project = id_project,
                                                 base_url = base_url,
                                                 token = token,
                                                 max_tries = max_tries),
@@ -273,13 +275,14 @@ dir_ls <- function(id_proj,
                    max_tries = 3L) {
   
   checkmate::assert_string(path)
-  checkmate::assert_flag(recursive)
+  checkmate::assert_int(id_project)
+  checkmate::assert_flag(recurse)
   checkmate::assert_string(ref)
   
-  api_req(path = glue::glue("/projects/{id_proj}/repository/tree"),
+  api_req(path = glue::glue("/projects/{id_project}/repository/tree"),
           method = "GET",
           url_params = list(path = path,
-                            recursive = recursive,
+                            recursive = recurse,
                             ref = ref,
                             pagination = "keyset",
                             per_page = 100L),
@@ -295,6 +298,69 @@ dir_ls <- function(id_proj,
         purrr::map_dfr(tibble::as_tibble_row)
     }) |>
     purrr::list_rbind()
+}
+```
+
+### `dir_delete`
+
+```{r}
+#' Delete directory from GitLab repository
+#'
+#' Deletes all files (Git blob objects) and submodule references (Git commit objects) within a directory of a GitLab repository, effectively deleting the
+#' directory (Git tree object), in a single Git commit. High-level convenience function that combines [dir_ls()] and [files_delete()].
+#'
+#' @inheritParams dir_ls
+#' @inheritParams files_delete
+#'
+#' @inherit files_delete return
+#' @family dirs
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' gitlab::dir_delete(path = "docs/dev",
+#'                    id_project = 64767928)}
+dir_delete <- function(path,
+                       id_project = pal::pkg_config_val("id_project"),
+                       start_branch = project_default_branch(id_project = id_project,
+                                                             base_url = base_url,
+                                                             token = token,
+                                                             max_tries = max_tries),
+                       start_sha = NULL,
+                       start_project = NULL,
+                       branch = start_branch,
+                       commit_message = "auto: delete directory via gitlab R pkg",
+                       author_email = NULL,
+                       author_name = NULL,
+                       incl_stats = TRUE,
+                       force = FALSE,
+                       last_commit_id = NULL,
+                       base_url = pal::pkg_config_val("base_url"),
+                       token = pal::pkg_config_val("token"),
+                       max_tries = 3L) {
+  dir_ls(path = path,
+         id_project = id_project,
+         recurse = TRUE,
+         ref = start_branch %||% branch,
+         base_url = base_url,
+         token = token,
+         max_tries = max_tries) |>
+    dplyr::filter(type != "tree") |>
+    dplyr::pull("path") |>
+    files_delete(id_project = id_project,
+                 start_branch = start_branch,
+                 start_sha = start_sha,
+                 start_project = start_project,
+                 branch = branch,
+                 commit_message = commit_message,
+                 author_email = author_email,
+                 author_name = author_name,
+                 incl_stats = incl_stats,
+                 force = force,
+                 last_commit_id = last_commit_id,
+                 base_url = base_url,
+                 token = token,
+                 max_tries = max_tries)
 }
 ```
 
@@ -325,12 +391,12 @@ Functions to manage files in GitLab projects.
 #' @keywords internal
 #'
 #' @examples
-#' gitlab::file_req(method = "HEAD",
-#'                  path = "README.md",
-#'                  id_proj = 64767928)
+#' gitlab:::file_req(method = "HEAD",
+#'                   path = "README.md",
+#'                   id_project = 64767928)
 file_req <- function(method,
                      path,
-                     id_proj,
+                     id_project = pal::pkg_config_val("id_project"),
                      ref = NULL,
                      body_json = NULL,
                      base_url = pal::pkg_config_val("base_url"),
@@ -338,11 +404,11 @@ file_req <- function(method,
                      max_tries = 3L) {
   
   checkmate::assert_string(path)
-  checkmate::assert_int(id_proj)
+  checkmate::assert_int(id_project)
   checkmate::assert_string(ref,
                            null.ok = TRUE)
   
-  api_req(path = glue::glue("/projects/{id_proj}/repository/files/", utils::URLencode(path, reserved = TRUE)),
+  api_req(path = glue::glue("/projects/{id_project}/repository/files/", utils::URLencode(path, reserved = TRUE)),
           method = method,
           url_params = purrr::compact(list(ref = ref)),
           body_json = body_json,
@@ -358,7 +424,7 @@ file_req <- function(method,
 #' GitLab file metadata
 #'
 #' Retrieves a file's metadata via the
-#' [`HEAD /projects/{id}/repository/files/{path}`](https://docs.gitlab.com/ee/api/repository_files.html#get-file-metadata-only-1) endpoint of GitLab's v4
+#' [`HEAD /projects/{id_project}/repository/files/{path}`](https://docs.gitlab.com/ee/api/repository_files.html#get-file-metadata-only-1) endpoint of GitLab's v4
 #' RESTful API.
 #'
 #' @inheritParams file_req
@@ -372,7 +438,7 @@ file_req <- function(method,
 #' @examples
 #' gitlab::file_meta(path = "README.md",
 #'                   attribute = "execute_filemode",
-#'                   id_proj = 64767928)
+#'                   id_project = 64767928)
 file_meta <- function(path,
                       attribute = c("file_name",
                                     "file_path",
@@ -384,8 +450,8 @@ file_meta <- function(path,
                                     "commit_id",
                                     "last_commit_id",
                                     "execute_filemode"),
-                      id_proj,
-                      ref = NULL,
+                      id_project = pal::pkg_config_val("id_project"),
+                      ref = "HEAD",
                       base_url = pal::pkg_config_val("base_url"),
                       token = pal::pkg_config_val("token"),
                       max_tries = 3L) {
@@ -394,7 +460,7 @@ file_meta <- function(path,
   
   result <- tryCatch(expr = httr2::req_perform(req = file_req(method = "HEAD",
                                                               path = path,
-                                                              id_proj = id_proj,
+                                                              id_project = id_project,
                                                               ref = ref,
                                                               base_url = base_url,
                                                               token = token,
@@ -418,8 +484,8 @@ file_meta <- function(path,
 #' Read in file from GitLab repository
 #'
 #' Downloads a file from a GitLab repository via the
-#' [`GET /projects/{id}/repository/files/{path}/raw`](https://docs.gitlab.com/ee/api/repository_files.html#get-raw-file-from-repository) endpoint of GitLab's v4
-#' RESTful API and returns its content.
+#' [`GET /projects/{id_project}/repository/files/{path}/raw`](https://docs.gitlab.com/ee/api/repository_files.html#get-raw-file-from-repository) endpoint of
+#' GitLab's v4 RESTful API and returns its content.
 #'
 #' @inheritParams file_req
 #'
@@ -429,10 +495,10 @@ file_meta <- function(path,
 #'
 #' @examples
 #' gitlab::file_content(path = "DESCRIPTION",
-#'                      id_proj = 64767928) |>
+#'                      id_project = 64767928) |>
 #'   cat()
 file_content <- function(path,
-                         id_proj,
+                         id_project = pal::pkg_config_val("id_project"),
                          ref = NULL,
                          base_url = pal::pkg_config_val("base_url"),
                          token = pal::pkg_config_val("token"),
@@ -440,7 +506,7 @@ file_content <- function(path,
   result <-
     file_req(method = "GET",
              path = path,
-             id_proj = id_proj,
+             id_project = id_project,
              ref = ref,
              base_url = base_url,
              token = token,
@@ -468,7 +534,7 @@ NOTES:
 #' GitLab file data
 #'
 #' Retrieves a file's metadata and content as structured data via the
-#' [`GET /projects/{id}/repository/files/{path}`](https://docs.gitlab.com/ee/api/repository_files.html#get-file-from-repository) endpoint of GitLab's v4
+#' [`GET /projects/{id_project}/repository/files/{path}`](https://docs.gitlab.com/ee/api/repository_files.html#get-file-from-repository) endpoint of GitLab's v4
 #' RESTful API.
 #'
 #' Note that it is more efficient to use
@@ -483,17 +549,17 @@ NOTES:
 #'
 #' @examples
 #' gitlab::file_full(path = "DESCRIPTION",
-#'                   id_proj = 64767928)
+#'                   id_project = 64767928)
 file_full <- function(path,
-                      id_proj,
-                      ref = NULL,
+                      id_project = pal::pkg_config_val("id_project"),
+                      ref = "HEAD",
                       base_url = pal::pkg_config_val("base_url"),
                       token = pal::pkg_config_val("token"),
                       max_tries = 3L) {
   
   file_req(method = "GET",
            path = path,
-           id_proj = id_proj,
+           id_project = id_project,
            ref = ref,
            base_url = base_url,
            token = token,
@@ -535,7 +601,7 @@ file_full <- function(path,
 #' @param author_name `r pkgsnip::type("chr", 1L)`
 #'   Git commit author's name. `NULL` means to default to the `token` owner.
 #' @param execute_filemode `r pkgsnip::type("lgl", 1L)`
-#'   Whether or not to mark the uploaded file as executable,
+#'   Whether or not to mark the uploaded file as executable.
 #' @param last_commit_id `r pkgsnip::type("chr", 1L)`
 #'   Last known file commit identifier. If provided (and valid), GitLab won't write to the file if a commit made after `last_commit_id` has modified the file.
 #'   Intended to avoid concurrency issues (e.g. from CI pipelines). `NULL` means to skip the check.
@@ -550,11 +616,11 @@ file_full <- function(path,
 #' \dontrun{
 #' gitlab::file_write(content = "a line of text",
 #'                    path = "test.md",
-#'                    id_proj = 64767928)}
+#'                    id_project = 64767928)}
 file_write <- function(content,
                        path,
-                       id_proj,
-                       start_branch = project_default_branch(id_proj = id_proj,
+                       id_project = pal::pkg_config_val("id_project"),
+                       start_branch = project_default_branch(id_project = id_project,
                                                              base_url = base_url,
                                                              token = token,
                                                              max_tries = max_tries),
@@ -568,7 +634,7 @@ file_write <- function(content,
                        execute_filemode = FALSE,
                        last_commit_id = file_meta(path = path,
                                                   attribute = "last_commit_id",
-                                                  id_proj = id_proj,
+                                                  id_project = id_project,
                                                   ref = branch,
                                                   base_url = base_url,
                                                   token = token,
@@ -598,7 +664,7 @@ file_write <- function(content,
   
   # return early if file hasn't changed ----
   exists_file <- file_exists(path = path,
-                             id_proj = id_proj,
+                             id_project = id_project,
                              ref = branch,
                              base_url = base_url,
                              token = token,
@@ -613,7 +679,7 @@ file_write <- function(content,
     if (!force && identical(hash_new,
                             file_meta(path = path,
                                       attribute = "content_sha256",
-                                      id_proj = id_proj,
+                                      id_project = id_project,
                                       ref = branch,
                                       base_url = base_url,
                                       token = token,
@@ -634,28 +700,28 @@ file_write <- function(content,
   
   if (is_raw) {
     content %<>% base64enc::base64encode()
+    encoding <- "base64"
+  } else {
+    encoding <- "text"
   }
   
-  encoding = ifelse(is_raw,
-                    "base64",
-                    "text")
   # upload file ----
   if (!quiet) {
-    link <- build_url(id_proj = id_proj,
+    link <- build_url(id_project = id_project,
                       path,
                       ref = branch,
                       force_branch_ref = TRUE,
                       base_url = base_url,
                       token = token,
                       max_tries = max_tries)
-    cli_id <- pal::cli_progress_step_quick(msg = paste0("Uploading file to GitLab project {.val {id_proj}} under path {.href [{path}]({link})}."))
+    cli_id <- pal::cli_progress_step_quick(msg = paste0("Uploading file to GitLab project {.val {id_project}} under path {.href [{path}]({link})}."))
   }
   
   if (exists_file) {
     if (overwrite) {
       file_update(content = content,
                   path = path,
-                  id_proj = id_proj,
+                  id_project = id_project,
                   branch = branch,
                   commit_message = commit_message,
                   author_email = author_email,
@@ -668,7 +734,7 @@ file_write <- function(content,
                   token = token,
                   max_tries = max_tries)
     } else {
-      link <- build_url(id_proj = id_proj,
+      link <- build_url(id_project = id_project,
                         path,
                         ref = branch,
                         force_branch_ref = TRUE,
@@ -680,7 +746,7 @@ file_write <- function(content,
   } else {
     file_create(content = content,
                 path = path,
-                id_proj = id_proj,
+                id_project = id_project,
                 branch = branch,
                 commit_message = commit_message,
                 author_email = author_email,
@@ -707,8 +773,8 @@ file_write <- function(content,
 #' Create file in GitLab repository
 #'
 #' Creates a new file in a GitLab repository via the
-#' [`POST /projects/{id}/repository/files/{path}`](https://docs.gitlab.com/ee/api/repository_files.html#create-new-file-in-repository) endpoint of GitLab's v4
-#' RESTful API.
+#' [`POST /projects/{id_project}/repository/files/{path}`](https://docs.gitlab.com/ee/api/repository_files.html#create-new-file-in-repository) endpoint of GitLab's
+#' v4 RESTful API.
 #'
 #' @inheritParams file_update
 #'
@@ -720,11 +786,11 @@ file_write <- function(content,
 #' \dontrun{
 #' gitlab::file_create(content = "a line of text",
 #'                     path = "test.md",
-#'                     id_proj = 64767928)}
+#'                     id_project = 64767928)}
 file_create <- function(content,
                         path,
-                        id_proj,
-                        start_branch = project_default_branch(id_proj = id_proj,
+                        id_project = pal::pkg_config_val("id_project"),
+                        start_branch = project_default_branch(id_project = id_project,
                                                               base_url = base_url,
                                                               token = token,
                                                               max_tries = max_tries),
@@ -752,7 +818,7 @@ file_create <- function(content,
   
   file_req(method = "POST",
            path = path,
-           id_proj = id_proj,
+           id_project = id_project,
            body_json = purrr::compact(list(branch = branch,
                                            content = content,
                                            commit_message = commit_message,
@@ -775,8 +841,8 @@ file_create <- function(content,
 #' Update file in GitLab repository
 #'
 #' Updates an existing file in a GitLab repository via the
-#' [`PUT /projects/{id}/repository/files/{path}`](https://docs.gitlab.com/ee/api/repository_files.html#update-existing-file-in-repository) endpoint of GitLab's
-#' v4 RESTful API.
+#' [`PUT /projects/{id_project}/repository/files/{path}`](https://docs.gitlab.com/ee/api/repository_files.html#update-existing-file-in-repository) endpoint of
+#' GitLab's v4 RESTful API.
 #'
 #' @inheritParams file_write
 #' @param encoding `r pkgsnip::type("chr", 1L)`
@@ -790,11 +856,11 @@ file_create <- function(content,
 #' \dontrun{
 #' gitlab::file_update(content = "a different line of text",
 #'                     path = "test.md",
-#'                     id_proj = 64767928)}
+#'                     id_project = 64767928)}
 file_update <- function(content,
                         path,
-                        id_proj,
-                        start_branch = project_default_branch(id_proj = id_proj,
+                        id_project = pal::pkg_config_val("id_project"),
+                        start_branch = project_default_branch(id_project = id_project,
                                                               base_url = base_url,
                                                               token = token,
                                                               max_tries = max_tries),
@@ -825,7 +891,7 @@ file_update <- function(content,
   
   file_req(method = "PUT",
            path = path,
-           id_proj = id_proj,
+           id_project = id_project,
            body_json = purrr::compact(list(branch = branch,
                                            content = content,
                                            commit_message = commit_message,
@@ -849,7 +915,7 @@ file_update <- function(content,
 #' Delete file from GitLab repository
 #'
 #' Deletes a file from a GitLab repository via the
-#' [`DELETE /projects/{id}/repository/files/{path}`](https://docs.gitlab.com/ee/api/repository_files.html#delete-existing-file-in-repository) endpoint of
+#' [`DELETE /projects/{id_project}/repository/files/{path}`](https://docs.gitlab.com/ee/api/repository_files.html#delete-existing-file-in-repository) endpoint of
 #' GitLab's v4 RESTful API.
 #'
 #' @inheritParams file_write
@@ -861,10 +927,10 @@ file_update <- function(content,
 #' @examples
 #' \dontrun{
 #' gitlab::file_delete(path = "test.md",
-#'                     id_proj = 64767928)}
+#'                     id_project = 64767928)}
 file_delete <- function(path,
-                        id_proj,
-                        start_branch = project_default_branch(id_proj = id_proj,
+                        id_project = pal::pkg_config_val("id_project"),
+                        start_branch = project_default_branch(id_project = id_project,
                                                               base_url = base_url,
                                                               token = token,
                                                               max_tries = max_tries),
@@ -890,7 +956,7 @@ file_delete <- function(path,
   
   file_req(method = "DELETE",
            path = path,
-           id_proj = id_proj,
+           id_project = id_project,
            body_json = purrr::compact(list(branch = branch,
                                            commit_message = commit_message,
                                            author_email = author_email,
@@ -902,6 +968,65 @@ file_delete <- function(path,
     httr2::req_perform()
   
   invisible(path)
+}
+```
+
+### `files_delete`
+
+```{r}
+#' Delete multiple files from GitLab repository
+#'
+#' Deletes multiple files from a GitLab repository in a single Git commit. High-level convenience function that combines [file_commit_action()] and
+#' [commit_files()].
+#'
+#' @inheritParams file_commit_action
+#' @inheritParams commit_files
+#' @param paths `r pkgsnip::type("chr")`
+#'   File paths, relative to the repository root.
+#'
+#' @inherit commit_files return
+#' @family files
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' gitlab::files_delete(paths = c("test.md", "test_old.md"),
+#'                      id_project = 64767928)}
+files_delete <- function(paths,
+                         id_project = pal::pkg_config_val("id_project"),
+                         start_branch = project_default_branch(id_project = id_project,
+                                                               base_url = base_url,
+                                                               token = token,
+                                                               max_tries = max_tries),
+                         start_sha = NULL,
+                         start_project = NULL,
+                         branch = start_branch,
+                         commit_message = "auto: delete files via gitlab R pkg",
+                         author_email = NULL,
+                         author_name = NULL,
+                         incl_stats = TRUE,
+                         force = FALSE,
+                         last_commit_id = NULL,
+                         base_url = pal::pkg_config_val("base_url"),
+                         token = pal::pkg_config_val("token"),
+                         max_tries = 3L) {
+  paths |>
+    purrr::map(\(path) file_commit_action(path = path,
+                                          action = "delete",
+                                          last_commit_id = last_commit_id)) |>
+    purrr::list_rbind() |>
+    commit_files(id_project = id_project,
+                 start_branch = start_branch,
+                 start_sha = start_sha,
+                 start_project = start_project,
+                 branch = branch,
+                 author_email = author_email,
+                 author_name = author_name,
+                 incl_stats = incl_stats,
+                 force = force,
+                 base_url = base_url,
+                 token = token,
+                 max_tries = max_tries)
 }
 ```
 
@@ -922,20 +1047,20 @@ file_delete <- function(path,
 #'
 #' @examples
 #' gitlab::file_exists(path = "README.md",
-#'                     id_proj = 64767928)
+#'                     id_project = 64767928)
 #'
 #' gitlab::file_exists(path = "test.md",
-#'                     id_proj = 64767928)
+#'                     id_project = 64767928)
 file_exists <- function(path,
-                        id_proj,
-                        ref = NULL,
+                        id_project = pal::pkg_config_val("id_project"),
+                        ref = "HEAD",
                         base_url = pal::pkg_config_val("base_url"),
                         token = pal::pkg_config_val("token"),
                         max_tries = 3L) {
   
   result <- tryCatch(expr = httr2::req_perform(req = file_req(method = "HEAD",
                                                               path = path,
-                                                              id_proj = id_proj,
+                                                              id_project = id_project,
                                                               ref = ref,
                                                               base_url = base_url,
                                                               token = token,
@@ -950,6 +1075,229 @@ file_exists <- function(path,
 }
 ```
 
+## Commits
+
+### `commit_files`
+
+```{r}
+#' Create a commit with multiple file actions
+#'
+#' Creates a Git commit with multiple file actions including
+#' `r pal::fn_param_defaults(param = "action", fn = file_commit_action) |> pal::enum_str(wrap = "\x60")` via the
+#' [`POST /projects/{id_project}/repository/commits`](https://docs.gitlab.com/ee/api/commits.html#create-a-commit-with-multiple-files-and-actions) endpoint of
+#' GitLab's v4 RESTful API.
+#'
+#' See the [official API documentation](https://docs.gitlab.com/ee/api/commits.html#create-a-commit-with-multiple-files-and-actions) for details about `actions`
+#' columns and their meaning.
+#'
+#' @inheritParams file_write
+#' @param actions `r pkgsnip::type("df")`
+#'   Commit actions data as returned by [file_commit_action()]. A data frame with the columns `r colnames(ptype_file_commit_actions) |> pal::enum_str()` (the
+#'   first two columns are mandatory).
+#' @param start_sha `r pkgsnip::type("chr", 1L)`
+#'   SHA value of the commit to create `branch` from. Alternative to `start_branch`.
+#' @param start_project `r pkgsnip::type("chr", 1L)`
+#'   GitLab project ID or [URL-encoded path](https://docs.gitlab.com/ee/api/rest/index.html#namespaced-paths) of the project to start the new branch from.
+#'   Defaults to the value of id.
+#' @param incl_stats `r pkgsnip::type("lgl", 1L)`
+#'   Whether or not to include commit statistics in the result.
+#' @param force `r pkgsnip::type("lgl", 1L)`
+#'   Whether or not to overwrite `branch` with a new commit based on `start_branch` or `start_sha`. Equivalent of `git push --force`.
+#'
+#' @return A list with metadata about the created commit.
+#' @family commits
+#' @family files
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' list(gitlab::file_commit_action(path = "test.txt",
+#'                                 action = "create",
+#'                                 content = "anyone there?"),
+#'      gitlab::file_commit_action(path = "old_test.txt",
+#'                                 action = "delete")) |>
+#'   purrr::list_rbind() |>
+#'   commit_files(id_project = 64767928)}
+commit_files <- function(actions,
+                         id_project = pal::pkg_config_val("id_project"),
+                         start_branch = project_default_branch(id_project = id_project,
+                                                               base_url = base_url,
+                                                               token = token,
+                                                               max_tries = max_tries),
+                         start_sha = NULL,
+                         start_project = NULL,
+                         branch = start_branch,
+                         commit_message = "auto: modify files via gitlab R pkg",
+                         author_email = NULL,
+                         author_name = NULL,
+                         incl_stats = TRUE,
+                         force = FALSE,
+                         base_url = pal::pkg_config_val("base_url"),
+                         token = pal::pkg_config_val("token"),
+                         max_tries = 3L) {
+  
+  checkmate::test_data_frame(actions,
+                             types = unique(purrr::map_chr(ptype_file_commit_actions,
+                                                           typeof)),
+                             all.missing = FALSE,
+                             min.cols = 2L,
+                             min.rows = 1L)
+  purrr::walk(colnames(actions),
+              \(x) checkmate::assert_choice(x,
+                                            choices = colnames(ptype_file_commit_actions),
+                                            .var.name = "colnames(actions)"))
+  checkmate::assert_int(id_project)
+  checkmate::assert_string(start_branch,
+                           null.ok = TRUE)
+  checkmate::assert_string(start_sha,
+                           null.ok = TRUE)
+  checkmate::assert_string(start_project,
+                           null.ok = TRUE)
+  checkmate::assert_string(branch)
+  checkmate::assert_string(commit_message)
+  checkmate::assert_string(author_email,
+                           null.ok = TRUE)
+  checkmate::assert_string(author_name,
+                           null.ok = TRUE)
+  checkmate::assert_flag(incl_stats)
+  checkmate::assert_flag(force)
+  
+  if (!is.null(start_branch) && !is.null(start_sha)) {
+    cli::cli_abort("Only one of {.arg start_branch} or {.arg start_sha} can be set, not both.")
+  }
+  
+  api_req(path = glue::glue("/projects/{id_project}/repository/commits"),
+          method = "POST",
+          body_json = purrr::compact(list(actions = actions,
+                                          commit_message = commit_message,
+                                          author_email = author_email,
+                                          author_name = author_name,
+                                          branch = branch,
+                                          start_branch = start_branch,
+                                          start_sha = start_sha,
+                                          start_project = start_project,
+                                          stats = incl_stats,
+                                          force = force)),
+          base_url = base_url,
+          token = token,
+          max_tries = max_tries) |>
+    httr2::req_perform() |>
+    httr2::resp_body_json()
+}
+```
+
+### `file_commit_action`
+
+```{r}
+#' Assemble file commit action
+#'
+#' Creates an `actions` data row ready to be fed to [commit_files()].
+#'
+#' @inheritParams file_write
+#' @param path `r pkgsnip::type("chr", 1L)`
+#'   Path to the file being acted on, relative to the repository root. For `action = "move"`, this is the destination path to move the file to.
+#' @param action `r pkgsnip::type("chr", 1L)`
+#'   Action to take on the file. One of `r pal::enum_fn_param_defaults(param = "action", fn = file_commit_action)`.
+#' @param content `r pkgsnip::type("chr", length = 1L, add_cr = FALSE)` or `r pkgsnip::type("raw")`
+#'   File content, as a character scalar for text files, or a raw vector for binary files. Or the path to a local file as a character scalar if
+#'   `from_file = TRUE`. Only considered for `"create"` and `"update"` `action`s.
+#' @param previous_path `r pkgsnip::type("chr", 1L)`
+#'   Original path to the file being moved. Only considered for `action = "move"`.
+#' @param execute_filemode `r pkgsnip::type("lgl", 1L)`
+#'   Whether or not to mark the uploaded file as executable.
+#' @param last_commit_id `r pkgsnip::type("chr", 1L)`
+#'   Last known file commit identifier. If provided (and valid), GitLab will only proceed if no commit made after `last_commit_id` has modified the file.
+#'   Intended to avoid concurrency issues (e.g. from CI pipelines). `NULL` means to skip the check. Only considered for `"delete"`, `"move"` and `"update"`
+#'   `action`s.
+#'
+#' @return A [tibble][tibble::tbl_df] row with the columns `r colnames(ptype_file_commit_actions) |> pal::enum_str(wrap = "\x60")`.
+#' @family commits
+#' @family files
+#' @export
+#'
+#' @examples
+#' # totally silly sequence of file actions to commit
+#' list(gitlab::file_commit_action(path = "test.txt",
+#'                                 action = "create",
+#'                                 content = "anyone there?"),
+#'      gitlab::file_commit_action(path = "test.txt",
+#'                                 action = "update",
+#'                                 content = "#!/bin/sh\n\necho 'anyone there?'\n"),
+#'      gitlab::file_commit_action(path = "test.sh",
+#'                                 action = "move",
+#'                                 previous_path = "test.txt"),
+#'      gitlab::file_commit_action(path = "test.sh",
+#'                                 action = "chmod",
+#'                                 execute_filemode = TRUE),
+#'      gitlab::file_commit_action(path = "test.sh",
+#'                                 action = "delete")) |>
+#'   purrr::list_rbind()
+#' 
+#' # to create/update a file on GitLab with a local file's content
+#' \dontrun{
+#' gitlab::file_commit_action(path = "test.txt",
+#'                            action = "create",
+#'                            content = "/PATH/TO/LOCAL/FILE",
+#'                            from_file = TRUE)}
+file_commit_action <- function(path,
+                               action = c("create", "delete", "move", "update", "chmod"),
+                               content = NULL,
+                               from_file = FALSE,
+                               previous_path = NULL,
+                               execute_filemode = NULL,
+                               last_commit_id = NULL) {
+  
+  checkmate::assert_character(path)
+  action <- rlang::arg_match(action)
+  checkmate::assert_vector(content,
+                           strict = TRUE,
+                           any.missing = FALSE,
+                           null.ok = !(action %in% c("create", "update")))
+  checkmate::assert_flag(from_file)
+  checkmate::assert_character(previous_path,
+                              null.ok = action != "move")
+  checkmate::assert_flag(execute_filemode,
+                         null.ok = action != "chmod")
+  checkmate::assert_string(last_commit_id,
+                           null.ok = TRUE)
+  
+  # read content and set encoding ----
+  encoding <- NULL
+  
+  if (!is.null(content)) {
+    is_raw <- is.raw(content)
+    
+    if (is_raw && from_file) {
+      cli::cli_abort("{.arg content} must be a character scalar path when {.arg from_file} is {.val {from_file}}.")
+    }
+    if (!is_raw) {
+      checkmate::assert_string(content)
+    }
+    
+    if (from_file) {
+      content %<>% brio::read_file_raw()
+      is_raw <- TRUE
+    }
+    
+    if (is_raw) {
+      content %<>% base64enc::base64encode()
+      encoding <- "base64"
+    } else {
+      encoding <- "text"
+    }
+  }
+  
+  # create df row ----
+  tibble::tibble_row(file_path = path,
+                     action = action,
+                     previous_path = previous_path,
+                     content = content,
+                     encoding = encoding,
+                     execute_filemode = execute_filemode,
+                     last_commit_id = last_commit_id)
+}
+```
+
 # INTERNAL
 
 ## Avoid `R CMD check` NOTES about undefined global objects
@@ -957,5 +1305,18 @@ file_exists <- function(path,
 cf. <https://github.com/tidyverse/magrittr/issues/29#issuecomment-74313262>
 
 ```{r}
-utils::globalVariables(names = c("."))
+utils::globalVariables(names = c(".",
+                                 "type"))
+```
+
+## Constants
+
+```{r}
+ptype_file_commit_actions <- tibble::tibble(action = character(),
+                                            file_path = character(),
+                                            previous_path = character(),
+                                            content = character(),
+                                            encoding = character(),
+                                            last_commit_id = character(),
+                                            execute_filemode = logical())
 ```
