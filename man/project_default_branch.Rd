@@ -35,9 +35,7 @@ Determines a GitLab project's default Git branch name.
 gitlab::project_default_branch(id_project = 64767928)
 }
 \seealso{
-Other common functions:
-\code{\link{api_req}()},
-\code{\link{build_url}()},
+Other functions to manage GitLab projects:
 \code{\link{project}()}
 }
-\concept{common}
+\concept{projects}

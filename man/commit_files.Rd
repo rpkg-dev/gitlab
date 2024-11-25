@@ -92,10 +92,10 @@ list(gitlab::file_commit_action(path = "test.txt",
   commit_files(id_project = 64767928)}
 }
 \seealso{
-Other commit management functions:
+Other functions to manage commits on GitLab:
 \code{\link{file_commit_action}()}
 
-Other file management functions:
+Other functions to manage files on GitLab:
 \code{\link{file_commit_action}()},
 \code{\link{file_content}()},
 \code{\link{file_create}()},

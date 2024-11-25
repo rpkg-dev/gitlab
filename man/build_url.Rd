@@ -7,7 +7,7 @@
 build_url(
   id_project = pal::pkg_config_val("id_project"),
   ...,
-  ref = NULL,
+  ref = "HEAD",
   force_branch_ref = FALSE,
   base_url = pal::pkg_config_val("base_url"),
   token = pal::pkg_config_val("token"),
@@ -23,8 +23,8 @@ Optional path components added to the repository base URL.}
 
 \item{ref}{\code{\link[base:character]{character(1)}}\cr
 \href{https://git-scm.com/docs/revisions#_specifying_revisions}{Git revision expression} matching the desired Git tree object, e.g. a ref name (branch, tag,
-etc.), a commit identifier, or another symbolic reference like \code{"HEAD~10"}. Note that the GitLab API doesn't support every type of revision expression.
-Defaults to \code{"HEAD"} if \code{NULL}.}
+etc.), a commit identifier, or another symbolic reference like \code{"HEAD~10"}. Omitted if \code{NULL}, otherwise set as a URL parameter. Note that the GitLab API
+doesn't support every type of revision expression.}
 
 \item{force_branch_ref}{\code{\link[base:logical]{logical(1)}}\cr
 Whether or not to force \code{ref} to be interpreted as a \emph{branch} name by adding the \code{ref_type=heads} URL parameter.}
@@ -50,9 +50,7 @@ gitlab::build_url(id_project = 64767928,
                   "Rmd/gitlab.Rmd")
 }
 \seealso{
-Other common functions:
-\code{\link{api_req}()},
-\code{\link{project}()},
-\code{\link{project_default_branch}()}
+Other common functions around GitLab's v4 RESTful API:
+\code{\link{api_req}()}
 }
 \concept{common}

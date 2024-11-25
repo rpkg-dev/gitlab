@@ -18,7 +18,7 @@ api_req(
 }
 \arguments{
 \item{path}{\code{\link[base:character]{character(1)}}\cr
-Path relative to the GitLab API \code{base_url}.}
+Endpoint path relative to the GitLab API \code{base_url}.}
 
 \item{method}{\code{\link[base:character]{character(1)}}\cr
 \href{https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods}{HTTP request method}.
@@ -60,9 +60,7 @@ gitlab::api_req(path = "/metadata",
   httr2::resp_body_json()
 }
 \seealso{
-Other common functions:
-\code{\link{build_url}()},
-\code{\link{project}()},
-\code{\link{project_default_branch}()}
+Other common functions around GitLab's v4 RESTful API:
+\code{\link{build_url}()}
 }
 \concept{common}

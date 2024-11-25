@@ -36,9 +36,7 @@ GitLab's v4 RESTful API.
 gitlab::project(id_project = 64767928)
 }
 \seealso{
-Other common functions:
-\code{\link{api_req}()},
-\code{\link{build_url}()},
+Other functions to manage GitLab projects:
 \code{\link{project_default_branch}()}
 }
-\concept{common}
+\concept{projects}

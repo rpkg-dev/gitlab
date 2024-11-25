@@ -6,6 +6,7 @@
 <url><loc>https://gitlab.rpkg.dev/dev/reference/build_url.html</loc></url>
 <url><loc>https://gitlab.rpkg.dev/dev/reference/commit_files.html</loc></url>
 <url><loc>https://gitlab.rpkg.dev/dev/reference/dir_delete.html</loc></url>
+<url><loc>https://gitlab.rpkg.dev/dev/reference/dir_exists.html</loc></url>
 <url><loc>https://gitlab.rpkg.dev/dev/reference/dir_ls.html</loc></url>
 <url><loc>https://gitlab.rpkg.dev/dev/reference/file_commit_action.html</loc></url>
 <url><loc>https://gitlab.rpkg.dev/dev/reference/file_content.html</loc></url>

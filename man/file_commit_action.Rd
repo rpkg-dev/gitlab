@@ -71,10 +71,10 @@ gitlab::file_commit_action(path = "test.txt",
                            from_file = TRUE)}
 }
 \seealso{
-Other commit management functions:
+Other functions to manage commits on GitLab:
 \code{\link{commit_files}()}
 
-Other file management functions:
+Other functions to manage files on GitLab:
 \code{\link{commit_files}()},
 \code{\link{file_content}()},
 \code{\link{file_create}()},

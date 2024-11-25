@@ -83,7 +83,7 @@ gitlab::file_update(content = "a different line of text",
                     id_project = 64767928)}
 }
 \seealso{
-Other file management functions:
+Other functions to manage files on GitLab:
 \code{\link{commit_files}()},
 \code{\link{file_commit_action}()},
 \code{\link{file_content}()},

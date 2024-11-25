@@ -86,7 +86,8 @@ gitlab::dir_delete(path = "docs/dev",
                    id_project = 64767928)}
 }
 \seealso{
-Other directory management functions:
+Other functions to manage directories on GitLab:
+\code{\link{dir_exists}()},
 \code{\link{dir_ls}()}
 }
 \concept{dirs}

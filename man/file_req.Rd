@@ -28,8 +28,8 @@ GitLab project identifier.}
 
 \item{ref}{\code{\link[base:character]{character(1)}}\cr
 \href{https://git-scm.com/docs/revisions#_specifying_revisions}{Git revision expression} matching the desired Git tree object, e.g. a ref name (branch, tag,
-etc.), a commit identifier, or another symbolic reference like \code{"HEAD~10"}. Note that the GitLab API doesn't support every type of revision expression.
-Defaults to \code{"HEAD"} if \code{NULL}.}
+etc.), a commit identifier, or another symbolic reference like \code{"HEAD~10"}. Omitted if \code{NULL}, otherwise set as a URL parameter. Note that the GitLab API
+doesn't support every type of revision expression.}
 
 \item{body_json}{\code{\link[base:list]{list()}}\cr
 Data to include as JSON in the HTTP request body. \code{NULL} means an empty body.}
@@ -57,7 +57,7 @@ gitlab:::file_req(method = "HEAD",
                   ref = "HEAD")
 }
 \seealso{
-Other file management functions:
+Other functions to manage files on GitLab:
 \code{\link{commit_files}()},
 \code{\link{file_commit_action}()},
 \code{\link{file_content}()},

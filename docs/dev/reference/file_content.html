@@ -76,8 +76,8 @@ GitLab project identifier.</p></dd>
 
 <dt id="arg-ref">ref<a class="anchor" aria-label="anchor" href="#arg-ref"></a></dt>
 <dd><p><code><a href="https://rdrr.io/r/base/character.html" class="external-link">character(1)</a></code><br><a href="https://git-scm.com/docs/revisions#_specifying_revisions" class="external-link">Git revision expression</a> matching the desired Git tree object, e.g. a ref name (branch, tag,
-etc.), a commit identifier, or another symbolic reference like <code>"HEAD~10"</code>. Note that the GitLab API doesn't support every type of revision expression.
-Defaults to <code>"HEAD"</code> if <code>NULL</code>.</p></dd>
+etc.), a commit identifier, or another symbolic reference like <code>"HEAD~10"</code>. Omitted if <code>NULL</code>, otherwise set as a URL parameter. Note that the GitLab API
+doesn't support every type of revision expression.</p></dd>
 
 
 <dt id="arg-base-url">base_url<a class="anchor" aria-label="anchor" href="#arg-base-url"></a></dt>
@@ -101,7 +101,7 @@ Maximum number of attempts to retry in case of an HTTP error.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p>Other file management functions:
+    <div class="dont-index"><p>Other functions to manage files on GitLab:
 <code><a href="commit_files.html">commit_files</a>()</code>,
 <code><a href="file_commit_action.html">file_commit_action</a>()</code>,
 <code><a href="file_create.html">file_create</a>()</code>,

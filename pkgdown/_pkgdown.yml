@@ -17,6 +17,7 @@ reference:
 - contents:
   - dir_ls
   - dir_delete
+  - dir_exists
 - title: Files
   desc: Functions to manage files in GitLab projects.
 - contents:
