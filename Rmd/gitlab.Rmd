@@ -363,6 +363,59 @@ dir_delete <- function(path,
 }
 ```
 
+### `dir_exists`
+
+```{r}
+#' Test if directory exists in GitLab repository
+#'
+#' Tests whether or not a directory (Git tree object) exists in a GitLab repository.
+#' 
+#' `dir_exists()` makes a light-weight HTTP HEAD request only and properly handles HTTP 404 Not Found errors.
+#'
+#' @inheritParams file_req
+#'
+#' @return A logical scalar.
+#' @family files
+#' @export
+#'
+#' @examples
+#' gitlab::dir_exists(path = "docs",
+#'                    id_project = 64767928)
+#'
+#' gitlab::dir_exists(path = "no/no/nope",
+#'                    id_project = 64767928)
+dir_exists <- function(path,
+                       id_project = pal::pkg_config_val("id_project"),
+                       ref = NULL,
+                       base_url = pal::pkg_config_val("base_url"),
+                       token = pal::pkg_config_val("token"),
+                       max_tries = 3L) {
+  
+  checkmate::assert_string(path)
+  checkmate::assert_int(id_project)
+  checkmate::assert_string(ref,
+                           null.ok = TRUE)
+  
+  # remove possible leading slash for convenience
+  path %<>% stringr::str_remove(pattern = "^/")
+  
+  result <- tryCatch(expr = httr2::req_perform(req = api_req(path = glue::glue("/projects/{id_project}/repository/tree"),
+                                                             method = "HEAD",
+                                                             url_params = purrr::compact(list(path = path,
+                                                                                              ref = ref)),
+                                                             base_url = base_url,
+                                                             token = token,
+                                                             max_tries = max_tries)),
+                     httr2_http_404 = \(cnd) FALSE)
+  
+  if (!isFALSE(result)) {
+    result <- TRUE
+  }
+  
+  result
+}
+```
+
 ## Files
 
 ### DESCRIPTION
