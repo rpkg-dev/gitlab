@@ -785,7 +785,8 @@ file_write <- function(content,
                       base_url = base_url,
                       token = token,
                       max_tries = max_tries)
-    cli_id <- pal::cli_progress_step_quick(msg = paste0("Uploading file to GitLab project {.val {id_project}} under path {.href [{path}]({link})}."))
+    # NOTE: seems we can't inline multiple vars in a pair of braces in cli exprs
+    cli_id <- pal::cli_progress_step_quick(msg = paste0("Uploading file to GitLab project {.val {id_project}} under path {.href [", path, "]({link})}."))
   }
   
   if (exists_file) {
@@ -812,7 +813,7 @@ file_write <- function(content,
                         base_url = base_url,
                         token = token,
                         max_tries = max_tries)
-      cli::cli_alert_info(text = "File {.href [{path}]({link})} already exists on GitLab. Set {.code overwrite = TRUE} in order to overwrite it.")
+      cli::cli_alert_info(paste0("File {.href [", path, "]({link})} already exists on GitLab. Set {.code overwrite = TRUE} in order to overwrite it."))
     }
   } else {
     file_create(content = content,
