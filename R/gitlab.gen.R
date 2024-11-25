@@ -1151,7 +1151,7 @@ commit_files <- function(actions,
     httr2::resp_body_json()
   
   if (!quiet) {
-    cli::cli_alert_success(paste0("Created commit {.field {result$short_id}}: {.href [", result$title, "]({result$web_url}})"))
+    cli::cli_alert_success(paste0("Created commit {.field {result$short_id}}: {.href [", result$title, "]({result$web_url})})"))
   }
   
   invisible(result)
