@@ -1180,7 +1180,7 @@ file_exists <- function(path,
 #' @param force `r pkgsnip::type("lgl", 1L)`
 #'   Whether or not to overwrite `branch` with a new commit based on `start_branch` or `start_sha`. Equivalent of `git push --force`.
 #'
-#' @return A list with metadata about the created commit.
+#' @return A list with metadata about the created commit, invisibly.
 #' @family commits
 #' @family files
 #' @export
@@ -1210,7 +1210,8 @@ commit_files <- function(actions,
                          force = FALSE,
                          base_url = pal::pkg_config_val("base_url"),
                          token = pal::pkg_config_val("token"),
-                         max_tries = 3L) {
+                         max_tries = 3L,
+                         quiet = FALSE) {
   
   checkmate::test_data_frame(actions,
                              types = unique(purrr::map_chr(ptype_file_commit_actions,
@@ -1237,28 +1238,36 @@ commit_files <- function(actions,
                            null.ok = TRUE)
   checkmate::assert_flag(incl_stats)
   checkmate::assert_flag(force)
+  checkmate::assert_flag(quiet)
   
   if (!is.null(start_branch) && !is.null(start_sha)) {
     cli::cli_abort("Only one of {.arg start_branch} or {.arg start_sha} can be set, not both.")
   }
   
-  api_req(path = glue::glue("/projects/{id_project}/repository/commits"),
-          method = "POST",
-          body_json = purrr::compact(list(actions = actions,
-                                          commit_message = commit_message,
-                                          author_email = author_email,
-                                          author_name = author_name,
-                                          branch = branch,
-                                          start_branch = start_branch,
-                                          start_sha = start_sha,
-                                          start_project = start_project,
-                                          stats = incl_stats,
-                                          force = force)),
-          base_url = base_url,
-          token = token,
-          max_tries = max_tries) |>
+  result <-
+    api_req(path = glue::glue("/projects/{id_project}/repository/commits"),
+            method = "POST",
+            body_json = purrr::compact(list(actions = actions,
+                                            commit_message = commit_message,
+                                            author_email = author_email,
+                                            author_name = author_name,
+                                            branch = branch,
+                                            start_branch = start_branch,
+                                            start_sha = start_sha,
+                                            start_project = start_project,
+                                            stats = incl_stats,
+                                            force = force)),
+            base_url = base_url,
+            token = token,
+            max_tries = max_tries) |>
     httr2::req_perform() |>
     httr2::resp_body_json()
+  
+  if (!quiet) {
+    cli::cli_alert_success(paste0("Created commit {.field {result$short_id}}: {.href [", result$title, "]({result$web_url}})"))
+  }
+  
+  invisible(result)
 }
 ```
 
