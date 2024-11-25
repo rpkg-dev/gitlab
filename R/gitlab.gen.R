@@ -146,7 +146,7 @@ build_url <- function(id_project = pal::pkg_config_val("id_project"),
 #' @export
 #'
 #' @examples
-#' gitlab::project(id_project = 64767928)
+#' gitlab::project(id_project = 64767928) |> names()
 project <- function(id_project = pal::pkg_config_val("id_project"),
                     base_url = pal::pkg_config_val("base_url"),
                     token = pal::pkg_config_val("token"),
@@ -205,8 +205,14 @@ project_default_branch <- function(id_project = pal::pkg_config_val("id_project"
 #'
 #' @examples
 #' gitlab::dir_ls(id_project = 64767928,
-#'                path = "man",
-#'                recurse = TRUE)
+#'                path = "Rmd")
+#'
+#' # look for the pkgdown sitemap(s)
+#' gitlab::dir_ls(id_project = 64767928,
+#'                path = "docs",
+#'                recurse = TRUE) |>
+#'   dplyr::filter(stringr::str_detect(name, "\\.xml$")) |>
+#'   dplyr::pull("path")
 dir_ls <- function(path = "",
                    id_project = pal::pkg_config_val("id_project"),
                    recurse = FALSE,
@@ -479,7 +485,8 @@ file_meta <- function(path,
 #'
 #' @examples
 #' gitlab::file_content(path = "DESCRIPTION",
-#'                      id_project = 64767928) |>
+#'                      id_project = 64767928,
+#'                      ref = "9c2fe95c63fef013205fe5ff64dd30494579f3f2") |>
 #'   cat()
 file_content <- function(path,
                          id_project = pal::pkg_config_val("id_project"),
@@ -525,7 +532,8 @@ file_content <- function(path,
 #'
 #' @examples
 #' gitlab::file_full(path = "DESCRIPTION",
-#'                   id_project = 64767928)
+#'                   id_project = 64767928,
+#'                   ref = "9c2fe95c63fef013205fe5ff64dd30494579f3f2")
 file_full <- function(path,
                       id_project = pal::pkg_config_val("id_project"),
                       ref = "HEAD",
