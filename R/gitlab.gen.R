@@ -142,7 +142,7 @@ build_url <- function(id_project = pal::pkg_config_val("id_project"),
 #'   GitLab project identifier.
 #'
 #' @return A list.
-#' @family common
+#' @family projects
 #' @export
 #'
 #' @examples
@@ -170,7 +170,7 @@ project <- function(id_project = pal::pkg_config_val("id_project"),
 #' @inheritParams project
 #'
 #' @return A character scalar.
-#' @family common
+#' @family projects
 #' @export
 #'
 #' @examples
@@ -316,7 +316,7 @@ dir_delete <- function(path,
 #' @inheritParams file_req
 #'
 #' @return A logical scalar.
-#' @family files
+#' @family dirs
 #' @export
 #'
 #' @examples
