@@ -76,8 +76,8 @@ GitLab project identifier.</p></dd>
 
 <dt id="arg-ref">ref<a class="anchor" aria-label="anchor" href="#arg-ref"></a></dt>
 <dd><p><code><a href="https://rdrr.io/r/base/character.html" class="external-link">character(1)</a></code><br><a href="https://git-scm.com/docs/revisions#_specifying_revisions" class="external-link">Git revision expression</a> matching the desired Git tree object, e.g. a ref name (branch, tag,
-etc.), a commit identifier, or another symbolic reference like <code>"HEAD~10"</code>. Omitted if <code>NULL</code>, otherwise set as a URL parameter. Note that the GitLab API
-doesn't support every type of revision expression.</p></dd>
+etc.), a commit identifier, or another symbolic reference like <code>"HEAD~10"</code>. Omitted if <code>NULL</code>, otherwise set as a URL parameter in the API request. Note
+that the GitLab API doesn't support every type of revision expression.</p></dd>
 
 
 <dt id="arg-base-url">base_url<a class="anchor" aria-label="anchor" href="#arg-base-url"></a></dt>
@@ -146,7 +146,7 @@ Maximum number of attempts to retry in case of an HTTP error.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "98c56652d8eb2ccdedd4a2ef60d3196c6a6a794c"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $commit_id</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "0ef69ca715560dfd1bb87a3d3c3b5dee5d83fced"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "63c62fe489a8e74480d72cc3abb5607417646aaf"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $last_commit_id</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "9c2fe95c63fef013205fe5ff64dd30494579f3f2"</span>

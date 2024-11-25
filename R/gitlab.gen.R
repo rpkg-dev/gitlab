@@ -366,8 +366,8 @@ dir_exists <- function(path,
 #'   File path, relative to the repository root.
 #' @param ref `r pkgsnip::type("chr", 1L)`
 #'   [Git revision expression](https://git-scm.com/docs/revisions#_specifying_revisions) matching the desired Git tree object, e.g. a ref name (branch, tag,
-#'   etc.), a commit identifier, or another symbolic reference like `"HEAD~10"`. Omitted if `NULL`, otherwise set as a URL parameter. Note that the GitLab API
-#'   doesn't support every type of revision expression.
+#'   etc.), a commit identifier, or another symbolic reference like `"HEAD~10"`. Omitted if `NULL`, otherwise set as a URL parameter in the API request. Note
+#'   that the GitLab API doesn't support every type of revision expression.
 #'
 #' @return httr2::req_method return
 #' @family files
