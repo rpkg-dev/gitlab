@@ -19,7 +19,7 @@
 #'
 #' @inheritParams nocodb::api
 #' @param path `r pkgsnip::type("chr", 1L)`
-#'   Path relative to the GitLab API `base_url`.
+#'   Endpoint path relative to the GitLab API `base_url`.
 #' @param method `r pkgsnip::type("chr", 1L)`
 #'   `r pkgsnip::param_lbl("http_method", one_of = pal::enum_fn_param_defaults(param = "method", fn = api_req))`
 #' @param base_url `r pkgsnip::type("chr", 1L)`
@@ -97,7 +97,6 @@ api_req <- function(path,
 #'
 #' Assembles the URL to the specified repository path for GitLab's web interface.
 #'
-#' @inheritParams project
 #' @inheritParams file_req
 #' @param ... `r pkgsnip::type("chr")`
 #'   Optional path components added to the repository base URL.
@@ -113,19 +112,15 @@ api_req <- function(path,
 #'                   "Rmd/gitlab.Rmd")
 build_url <- function(id_project = pal::pkg_config_val("id_project"),
                       ...,
-                      ref = NULL,
+                      ref = "HEAD",
                       force_branch_ref = FALSE,
                       base_url = pal::pkg_config_val("base_url"),
                       token = pal::pkg_config_val("token"),
                       max_tries = 3L) {
   
   checkmate::assert_string(ref,
-                           null.ok = TRUE)
+                           min.chars = 1L)
   checkmate::assert_flag(force_branch_ref)
-  
-  if (is.null(ref)) {
-    ref <- "HEAD"
-  }
   
   project(id_project = id_project,
           base_url = base_url,
@@ -226,7 +221,11 @@ dir_ls <- function(path = "",
   checkmate::assert_string(path)
   checkmate::assert_int(id_project)
   checkmate::assert_flag(recurse)
-  checkmate::assert_string(ref)
+  checkmate::assert_string(ref,
+                           min.chars = 1L)
+  
+  # remove possible leading slash for convenience
+  path %<>% stringr::str_remove(pattern = "^/")
   
   api_req(path = glue::glue("/projects/{id_project}/repository/tree"),
           method = "GET",
@@ -318,8 +317,8 @@ dir_delete <- function(path,
 #'   File path, relative to the repository root.
 #' @param ref `r pkgsnip::type("chr", 1L)`
 #'   [Git revision expression](https://git-scm.com/docs/revisions#_specifying_revisions) matching the desired Git tree object, e.g. a ref name (branch, tag,
-#'   etc.), a commit identifier, or another symbolic reference like `"HEAD~10"`. Note that the GitLab API doesn't support every type of revision expression.
-#'   Defaults to `"HEAD"` if `NULL`.
+#'   etc.), a commit identifier, or another symbolic reference like `"HEAD~10"`. Omitted if `NULL`, otherwise set as a URL parameter. Note that the GitLab API
+#'   doesn't support every type of revision expression.
 #'
 #' @return httr2::req_method return
 #' @family files
@@ -344,6 +343,9 @@ file_req <- function(method,
   checkmate::assert_string(ref,
                            null.ok = TRUE)
   
+  # remove possible leading slash for convenience
+  path %<>% stringr::str_remove(pattern = "^/")
+  
   api_req(path = glue::glue("/projects/{id_project}/repository/files/", utils::URLencode(path, reserved = TRUE)),
           method = method,
           url_params = purrr::compact(list(ref = ref)),
@@ -363,7 +365,9 @@ file_req <- function(method,
 #' @param attribute `r pkgsnip::type("chr", 1L)`
 #'   Name of the metadata attribute to return.
 #'
-#' @return An integer scalar if `attribute = size`, a logical scalar if `attribute = execute_filemode`, or a character scalar in all other cases.
+#' @return An integer scalar if `attribute = "size"`, a logical scalar if `attribute = "execute_filemode"`, or a character scalar in all other cases.
+#'   
+#'   Note that an empty vector is returned for invalid `ref`s.
 #' @family files
 #' @export
 #'
@@ -389,6 +393,9 @@ file_meta <- function(path,
                       max_tries = 3L) {
   
   attribute <- rlang::arg_match(attribute)
+  # omitting `ref` results in HTTP 400 Bad Request
+  checkmate::assert_string(ref,
+                           min.chars = 1L)
   
   result <- tryCatch(expr = httr2::req_perform(req = file_req(method = "HEAD",
                                                               path = path,
@@ -476,6 +483,10 @@ file_full <- function(path,
                       base_url = pal::pkg_config_val("base_url"),
                       token = pal::pkg_config_val("token"),
                       max_tries = 3L) {
+  
+  # omitting `ref` results in HTTP 400 Bad Request
+  checkmate::assert_string(ref,
+                           min.chars = 1L)
   
   file_req(method = "GET",
            path = path,
@@ -954,6 +965,10 @@ file_exists <- function(path,
                         token = pal::pkg_config_val("token"),
                         max_tries = 3L) {
   
+  # omitting `ref` results in HTTP 400 Bad Request
+  checkmate::assert_string(ref,
+                           min.chars = 1L)
+  
   result <- tryCatch(expr = httr2::req_perform(req = file_req(method = "HEAD",
                                                               path = path,
                                                               id_project = id_project,
@@ -1146,6 +1161,9 @@ file_commit_action <- function(path,
                          null.ok = action != "chmod")
   checkmate::assert_string(last_commit_id,
                            null.ok = TRUE)
+  
+  # remove possible leading slash for convenience ----
+  path %<>% stringr::str_remove(pattern = "^/")
   
   # read content and set encoding ----
   encoding <- NULL
