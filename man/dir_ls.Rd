@@ -49,8 +49,14 @@ Lists file and directory names found under the specified path in a GitLab reposi
 }
 \examples{
 gitlab::dir_ls(id_project = 64767928,
-               path = "man",
-               recurse = TRUE)
+               path = "Rmd")
+
+# look for the pkgdown sitemap(s)
+gitlab::dir_ls(id_project = 64767928,
+               path = "docs",
+               recurse = TRUE) |>
+  dplyr::filter(stringr::str_detect(name, "\\\\.xml$")) |>
+  dplyr::pull("path")
 }
 \seealso{
 Other functions to manage directories on GitLab:

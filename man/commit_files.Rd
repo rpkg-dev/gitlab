@@ -19,7 +19,8 @@ commit_files(
   force = FALSE,
   base_url = pal::pkg_config_val("base_url"),
   token = pal::pkg_config_val("token"),
-  max_tries = 3L
+  max_tries = 3L,
+  quiet = FALSE
 )
 }
 \arguments{
@@ -67,9 +68,12 @@ which results in \emph{HTTP 404 Not Found} and other errors for non-public resou
 
 \item{max_tries}{\code{\link[base:integer]{integer(1)}}\cr
 Maximum number of attempts to retry in case of an HTTP error.}
+
+\item{quiet}{\code{\link[base:logical]{logical(1)}}\cr
+Whether or not to suppress printing status output from internal processing.}
 }
 \value{
-A list with metadata about the created commit.
+A list with metadata about the created commit, invisibly.
 }
 \description{
 Creates a Git commit with multiple file actions including

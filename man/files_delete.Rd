@@ -74,7 +74,7 @@ which results in \emph{HTTP 404 Not Found} and other errors for non-public resou
 Maximum number of attempts to retry in case of an HTTP error.}
 }
 \value{
-A list with metadata about the created commit.
+A list with metadata about the created commit, invisibly.
 }
 \description{
 Deletes multiple files from a GitLab repository in a single Git commit. High-level convenience function that combines \code{\link[=file_commit_action]{file_commit_action()}} and

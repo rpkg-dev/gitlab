@@ -113,22 +113,20 @@ Maximum number of attempts to retry in case of an HTTP error.</p></dd>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">gitlab</span><span class="fu">::</span><span class="fu">dir_ls</span><span class="op">(</span>id_project <span class="op">=</span> <span class="fl">64767928</span>,</span></span>
-<span class="r-in"><span>               path <span class="op">=</span> <span class="st">"man"</span>,</span></span>
-<span class="r-in"><span>               recurse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 22 × 5</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    id                                       name                  type  path                      mode  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> f6dee73e2cd65ae9ec72a066548836b0d42bd2e5 roxygen               tree  man/roxygen               040000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> a81fcc66391589beef2c357c45fae9ecd9270a13 api_req.Rd            blob  man/api_req.Rd            100644</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> c3931dbd6dcf4c0ebacf30425388fb9eac6f5445 build_url.Rd          blob  man/build_url.Rd          100644</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 999cc7114a3c2ff3cc844f4120cb91d465dd44f4 commit_files.Rd       blob  man/commit_files.Rd       100644</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> e341e4ecb6f68be580499d3154723d53c7078743 dir_delete.Rd         blob  man/dir_delete.Rd         100644</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 9080a0792f37cd7764cad8f4e56a0bc8ea747af8 dir_exists.Rd         blob  man/dir_exists.Rd         100644</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> e30ac42a2ee37e9e0521a30dceb3ed9c1ed7ad8d dir_ls.Rd             blob  man/dir_ls.Rd             100644</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 67caf003c5bf5e201baa8655ed1a6a237567097d file_commit_action.Rd blob  man/file_commit_action.Rd 100644</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 4a22252a18a7dccce9e2a8ecaf9047601d3cabc4 file_content.Rd       blob  man/file_content.Rd       100644</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> d116fff13a62efa44cb02bd5b3477693971d27b2 file_create.Rd        blob  man/file_create.Rd        100644</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 12 more rows</span></span>
+<span class="r-in"><span>               path <span class="op">=</span> <span class="st">"Rmd"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 5</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   id                                       name               type  path                   mode  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> dac2d705732cbbfb90fd56b53ce307dd5510354d gitlab.Rmd         blob  Rmd/gitlab.Rmd         100644</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> bec8d2f0a6ffc62a1c45d89aa658eeb65181c1c6 sysdata.nopurl.Rmd blob  Rmd/sysdata.nopurl.Rmd 100644</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># look for the pkgdown sitemap(s)</span></span></span>
+<span class="r-in"><span><span class="fu">gitlab</span><span class="fu">::</span><span class="fu">dir_ls</span><span class="op">(</span>id_project <span class="op">=</span> <span class="fl">64767928</span>,</span></span>
+<span class="r-in"><span>               path <span class="op">=</span> <span class="st">"docs"</span>,</span></span>
+<span class="r-in"><span>               recurse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span><span class="va">name</span>, <span class="st">"\\.xml$"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="st">"path"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "docs/dev/sitemap.xml"</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

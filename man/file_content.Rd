@@ -45,7 +45,8 @@ GitLab's v4 RESTful API and returns its content.
 }
 \examples{
 gitlab::file_content(path = "DESCRIPTION",
-                     id_project = 64767928) |>
+                     id_project = 64767928,
+                     ref = "9c2fe95c63fef013205fe5ff64dd30494579f3f2") |>
   cat()
 }
 \seealso{

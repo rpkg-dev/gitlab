@@ -33,7 +33,7 @@ Retrieves a GitLab project's metadata via the \href{https://docs.gitlab.com/ee/a
 GitLab's v4 RESTful API.
 }
 \examples{
-gitlab::project(id_project = 64767928)
+gitlab::project(id_project = 64767928) |> names()
 }
 \seealso{
 Other functions to manage GitLab projects:

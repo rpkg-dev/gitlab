@@ -118,7 +118,8 @@ Maximum number of attempts to retry in case of an HTTP error.</p></dd>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">gitlab</span><span class="fu">::</span><span class="fu">file_content</span><span class="op">(</span>path <span class="op">=</span> <span class="st">"DESCRIPTION"</span>,</span></span>
-<span class="r-in"><span>                     id_project <span class="op">=</span> <span class="fl">64767928</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>                     id_project <span class="op">=</span> <span class="fl">64767928</span>,</span></span>
+<span class="r-in"><span>                     ref <span class="op">=</span> <span class="st">"9c2fe95c63fef013205fe5ff64dd30494579f3f2"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Package: gitlab</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Title: Use GitLab's v4 RESTful API</span>

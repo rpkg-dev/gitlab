@@ -52,7 +52,8 @@ Note that it is more efficient to use
 }
 \examples{
 gitlab::file_full(path = "DESCRIPTION",
-                  id_project = 64767928)
+                  id_project = 64767928,
+                  ref = "9c2fe95c63fef013205fe5ff64dd30494579f3f2")
 }
 \seealso{
 Other functions to manage files on GitLab:

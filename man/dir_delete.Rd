@@ -74,7 +74,7 @@ which results in \emph{HTTP 404 Not Found} and other errors for non-public resou
 Maximum number of attempts to retry in case of an HTTP error.}
 }
 \value{
-A list with metadata about the created commit.
+A list with metadata about the created commit, invisibly.
 }
 \description{
 Deletes all files (Git blob objects) and submodule references (Git commit objects) within a directory of a GitLab repository, effectively deleting the
