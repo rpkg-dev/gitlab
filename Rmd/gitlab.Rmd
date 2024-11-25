@@ -1326,7 +1326,6 @@ file_commit_action <- function(path,
   checkmate::assert_character(path)
   action <- rlang::arg_match(action)
   checkmate::assert_vector(content,
-                           strict = TRUE,
                            any.missing = FALSE,
                            null.ok = !(action %in% c("create", "update")))
   checkmate::assert_flag(from_file)
