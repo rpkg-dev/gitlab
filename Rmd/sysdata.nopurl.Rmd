@@ -40,7 +40,7 @@ pkg_config <-
                   require = FALSE,
                   description = paste0("[GitLab access token](https://docs.gitlab.com/ee/api/rest/authentication.html) used for authentication when `token` is",
                                        " not explicitly provided to the functions of this package. A personal access token for gitlab.com can be created under",
-                                       "[this link](https://gitlab.com/-/user_settings/personal_access_tokens)."))
+                                       " [this link](https://gitlab.com/-/user_settings/personal_access_tokens)."))
 ```
 
 # Write data
