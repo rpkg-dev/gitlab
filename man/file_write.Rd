@@ -86,7 +86,7 @@ Whether or not to suppress printing status output from internal processing.}
 }
 \description{
 Uploads a file to a GitLab repository via \href{https://docs.gitlab.com/ee/api/rest/}{GitLab's v4 RESTful API}. High-level function that by default skips
-uploading identical file content and automatically choses \code{\link[=file_create]{file_create()}} or \code{\link[=file_update]{file_update()}} based on whether the file already exists or not.
+uploading identical file content and automatically chooses \code{\link[=file_create]{file_create()}} or \code{\link[=file_update]{file_update()}} depending on whether the file already exists or not.
 }
 \details{
 To save up to two additional \code{HEAD} requests, set \code{start_branch} and \code{last_commit_id} explicitly. Setting \code{last_commit_id = NULL} is fine as long as file

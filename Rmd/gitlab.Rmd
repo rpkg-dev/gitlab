@@ -654,7 +654,7 @@ file_full <- function(path,
 #' Write file to GitLab repository
 #'
 #' Uploads a file to a GitLab repository via [GitLab's v4 RESTful API](https://docs.gitlab.com/ee/api/rest/). High-level function that by default skips
-#' uploading identical file content and automatically choses [file_create()] or [file_update()] based on whether the file already exists or not.
+#' uploading identical file content and automatically chooses [file_create()] or [file_update()] depending on whether the file already exists or not.
 #'
 #' To save up to two additional `HEAD` requests, set `start_branch` and `last_commit_id` explicitly. Setting `last_commit_id = NULL` is fine as long as file
 #' writes are part of a controlled, single-user process where concurrency is not a concern.
