@@ -11,7 +11,7 @@ file_update(
   start_branch = project_default_branch(id_project = id_project, base_url = base_url,
     token = token, max_tries = max_tries),
   branch = start_branch,
-  commit_message = "auto: update file gitlab gitlab R pkg",
+  commit_message = "auto: update file via gitlab R pkg",
   author_email = NULL,
   author_name = NULL,
   encoding = c("text", "base64"),
