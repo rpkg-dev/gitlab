@@ -8,8 +8,8 @@ editor_options:
 -   The [gitlabr](https://thinkr-open.github.io/gitlabr/) package unfortunately neither conveniently supports HTTP HEAD requests, nor does it expose the API
     response's HTTP header values. Also it's built upon legacy httr. Hence, this httr2-based **gitlab** package with a thoroughly designed core `api_req()` that
     easily enables us to implement the RESTful API like it's meant to be used, including light-weight ("cached") requests etc. The package is designed in a
-    fully functional way which may look unfamiliar due to the constant argument passing, especially between default arguments. This is the very spirit of
-    functional programming that fosters correctness.
+    [purely functional](https://en.wikipedia.org/wiki/Purely_functional_programming) way which may look unfamiliar due to the constant argument passing,
+    especially between default arguments. This is the very spirit of functional programming that fosters correctness.
 
     Thanks to [pal's canonicalized way to package configuration](https://pal.rpkg.dev/reference/#package-configuration), setting necessary state globally like
     API's base URL and access token is still easy for users and transparent for devs.

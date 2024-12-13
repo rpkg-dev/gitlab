@@ -21,6 +21,12 @@ library(magrittr,
 #| child: !expr pkgsnip::snip_path("pkg-desc.Rmd")
 ```
 
+In contrast to the [**gitlabr**](https://thinkr-open.github.io/gitlabr/) package, this package is built upon [httr2](https://httr2.r-lib.org/) and features a
+thoroughly designed [`api_req()`](https://gitlab.rpkg.dev/reference/api_req) core function that easily allows to implement the RESTful API like it's meant to be
+used, including light-weight ("cached") requests etc. The package is designed in a [purely
+functional](https://en.wikipedia.org/wiki/Purely_functional_programming) way[^1]. Note however, that gitlabr still covers a lot more API endpoints than this
+package.
+
 ```{r}
 #| label: pkg-doc
 #| eval: !expr '!isTRUE(getOption("pal.build_readme.is_pkgdown"))'
@@ -34,6 +40,9 @@ pkgsnip::md_snip(id = "pkgdown_site") %>%
          .) |>
   pal::cat_lines()
 ```
+
+[^1]: Thanks to [pal's canonicalized way to package configuration](https://pal.rpkg.dev/reference/#package-configuration), setting necessary state globally like
+    the API's base URL and access token is still easy for users and transparent for developers.
 
 ## Installation
 
