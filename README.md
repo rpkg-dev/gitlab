@@ -4,7 +4,7 @@
 
 Allows to conveniently work with GitLab’s v4 RESTful API from R. [GitLab](https://gitlab.com) is an open-source DevOps software suite that i.a. includes a powerful Git forge.
 
-In contrast to the [**gitlabr**](https://thinkr-open.github.io/gitlabr/) package, this package is built upon [httr2](https://httr2.r-lib.org/) and features a thoroughly designed [`api_req()`](https://gitlab.rpkg.dev/reference/api_req) core function that easily allows to implement the RESTful API like it’s meant to be used, including light-weight (“cached”) requests etc. The package is designed in a [purely functional](https://en.wikipedia.org/wiki/Purely_functional_programming) way[^1]. Note however, that gitlabr still covers a lot more API endpoints than this package.
+In contrast to the [**gitlabr**](https://thinkr-open.github.io/gitlabr/) package, this package is built upon [httr2](https://httr2.r-lib.org/) and features a thoroughly designed [`api_req()`](https://gitlab.rpkg.dev/reference/api_req) core function that easily allows to implement the RESTful API like it’s meant to be used, including light-weight (“cached”) requests etc. The package is designed in a [purely functional](https://en.wikipedia.org/wiki/Purely_functional_programming) way[^1]. However, note that gitlabr still covers many more API endpoints than this package.
 
 ## Documentation
 
