@@ -98,7 +98,7 @@ which results in <em>HTTP 404 Not Found</em> and other errors for non-public res
 
 <dt id="arg-max-tries">max_tries<a class="anchor" aria-label="anchor" href="#arg-max-tries"></a></dt>
 <dd><p><code><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer(1)</a></code><br>
-Maximum number of attempts to retry in case of an HTTP error.</p></dd>
+Maximum number of request attempts in case of an HTTP error. An integerish scalar. Retries are performed using exponential backoff and jitter, see <code><a href="https://httr2.r-lib.org/reference/req_retry.html" class="external-link">httr2::req_retry()</a></code> for details.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -130,11 +130,14 @@ Maximum number of attempts to retry in case of an HTTP error.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">&lt;httr2_request&gt;</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">HEAD</span> https://gitlab.com/api/v4/projects/64767928/repository/files/README.md?ref=HEAD</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Headers:</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> • <span style="color: #00BB00;">PRIVATE-TOKEN</span>: '<span style="color: #555555;">&lt;REDACTED&gt;</span>'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> • <span style="color: #00BB00;">PRIVATE-TOKEN</span>: "<span style="color: #555555;">&lt;REDACTED&gt;</span>"</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Body</span>: empty</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Policies:</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> • <span style="color: #00BB00;">retry_max_tries</span>: 3</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> • <span style="color: #00BB00;">retry_on_failure</span>: FALSE</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> • <span style="color: #00BB00;">retry_failure_threshold</span>: Inf</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> • <span style="color: #00BB00;">retry_failure_timeout</span>: 30</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> • <span style="color: #00BB00;">retry_realm</span>: "gitlab.com"</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> • <span style="color: #00BB00;">error_body</span>: a function</span>
 </code></pre></div>
     </div>

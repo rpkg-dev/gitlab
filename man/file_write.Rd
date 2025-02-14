@@ -76,7 +76,7 @@ Base URL to the GitLab v4 RESTful API root.}
 which results in \emph{HTTP 404 Not Found} and other errors for non-public resources.}
 
 \item{max_tries}{\code{\link[base:integer]{integer(1)}}\cr
-Maximum number of attempts to retry in case of an HTTP error.}
+Maximum number of request attempts in case of an HTTP error. An integerish scalar. Retries are performed using exponential backoff and jitter, see \code{\link[httr2:req_retry]{httr2::req_retry()}} for details.}
 
 \item{quiet}{\code{\link[base:logical]{logical(1)}}\cr
 Whether or not to suppress printing status output from internal processing.}

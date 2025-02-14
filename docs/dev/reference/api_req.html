@@ -103,12 +103,12 @@ which results in <em>HTTP 404 Not Found</em> and other errors for non-public res
 
 <dt id="arg-max-tries">max_tries<a class="anchor" aria-label="anchor" href="#arg-max-tries"></a></dt>
 <dd><p><code><a href="https://rdrr.io/r/base/integer.html" class="external-link">integer(1)</a></code><br>
-Maximum number of attempts to retry in case of an HTTP error.</p></dd>
+Maximum number of request attempts in case of an HTTP error. An integerish scalar. Retries are performed using exponential backoff and jitter, see <code><a href="https://httr2.r-lib.org/reference/req_retry.html" class="external-link">httr2::req_retry()</a></code> for details.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>httr2::req_method return</p>
+    <p>A modified HTTP <a href="https://httr2.r-lib.org/reference/request.html" class="external-link">request</a>.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -124,10 +124,10 @@ Maximum number of attempts to retry in case of an HTTP error.</p></dd>
 <span class="r-in"><span>  <span class="fu">httr2</span><span class="fu">::</span><span class="fu"><a href="https://httr2.r-lib.org/reference/req_perform.html" class="external-link">req_perform</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">httr2</span><span class="fu">::</span><span class="fu"><a href="https://httr2.r-lib.org/reference/resp_body_raw.html" class="external-link">resp_body_json</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $version</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "17.7.0-pre"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "17.9.0-pre"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $revision</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "a4ebccf2510"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "0363009894f"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $kas</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $kas$enabled</span>
@@ -140,7 +140,7 @@ Maximum number of attempts to retry in case of an HTTP error.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "https://kas.gitlab.com/k8s-proxy"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $kas$version</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "17.7.0+ed8e69891a82913e19430e094c192833ea5cb066"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "17.9.0-rc2+737917b4ec3db719fbed640d2c9cbd9be6e38b05"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $enterprise</span>
