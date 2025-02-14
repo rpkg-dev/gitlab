@@ -2,7 +2,7 @@
 # See `README.md#r-markdown-format` for more information on the literate programming approach used applying the R Markdown format.
 
 # gitlab: Use GitLab's v4 RESTful API
-# Copyright (C) 2024 Salim Brüggemann
+# Copyright (C) 2025 Salim Brüggemann
 # 
 # This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free
 # Software Foundation, either version 3 of the License, or any later version.
@@ -28,7 +28,7 @@
 #'   [GitLab access token](https://docs.gitlab.com/ee/api/rest/authentication.html) used for authentication. If `NULL`, the API request is made unauthenticated
 #'   which results in *HTTP 404 Not Found* and other errors for non-public resources.
 #'
-#' @return httr2::req_method return
+#' @inherit httr2::req_method return
 #' @family common
 #' @export
 #'

@@ -46,7 +46,7 @@ which results in \emph{HTTP 404 Not Found} and other errors for non-public resou
 Maximum number of attempts to retry in case of an HTTP error.}
 }
 \value{
-httr2::req_method return
+A modified HTTP \link[httr2]{request}.
 }
 \description{
 Assembles the HTTP request structure that is common to \emph{all} \href{https://docs.gitlab.com/ee/api/rest/}{GitLab v4 RESTful API} requests performed by this

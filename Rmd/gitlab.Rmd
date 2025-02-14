@@ -43,7 +43,7 @@ Common functions that are of generic use.
 #'   [GitLab access token](https://docs.gitlab.com/ee/api/rest/authentication.html) used for authentication. If `NULL`, the API request is made unauthenticated
 #'   which results in *HTTP 404 Not Found* and other errors for non-public resources.
 #'
-#' @return httr2::req_method return
+#' @inherit httr2::req_method return
 #' @family common
 #' @export
 #'
