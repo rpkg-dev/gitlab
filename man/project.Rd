@@ -5,9 +5,9 @@
 \title{GitLab project metadata}
 \usage{
 project(
-  id_project = pal::pkg_config_val("id_project"),
-  base_url = pal::pkg_config_val("base_url"),
-  token = pal::pkg_config_val("token"),
+  id_project = funky::config_val("id_project"),
+  base_url = funky::config_val("base_url"),
+  token = funky::config_val("token"),
   max_tries = 3L
 )
 }

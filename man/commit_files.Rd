@@ -6,7 +6,7 @@
 \usage{
 commit_files(
   actions,
-  id_project = pal::pkg_config_val("id_project"),
+  id_project = funky::config_val("id_project"),
   start_branch = project_default_branch(id_project = id_project, base_url = base_url,
     token = token, max_tries = max_tries),
   start_sha = NULL,
@@ -17,8 +17,8 @@ commit_files(
   author_name = NULL,
   incl_stats = TRUE,
   force = FALSE,
-  base_url = pal::pkg_config_val("base_url"),
-  token = pal::pkg_config_val("token"),
+  base_url = funky::config_val("base_url"),
+  token = funky::config_val("token"),
   max_tries = 3L,
   quiet = FALSE
 )

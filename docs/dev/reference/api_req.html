@@ -54,8 +54,8 @@ package.</p>
 <span>  url_params <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  body_json <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  auto_unbox <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  base_url <span class="op">=</span> <span class="fu">pal</span><span class="fu">::</span><span class="fu"><a href="https://pal.rpkg.dev/reference/pkg_config_val.html" class="external-link">pkg_config_val</a></span><span class="op">(</span><span class="st">"base_url"</span><span class="op">)</span>,</span>
-<span>  token <span class="op">=</span> <span class="fu">pal</span><span class="fu">::</span><span class="fu"><a href="https://pal.rpkg.dev/reference/pkg_config_val.html" class="external-link">pkg_config_val</a></span><span class="op">(</span><span class="st">"token"</span><span class="op">)</span>,</span>
+<span>  base_url <span class="op">=</span> <span class="fu">funky</span><span class="fu">::</span><span class="fu"><a href="https://funky.rpkg.dev/reference/config_val.html" class="external-link">config_val</a></span><span class="op">(</span><span class="st">"base_url"</span><span class="op">)</span>,</span>
+<span>  token <span class="op">=</span> <span class="fu">funky</span><span class="fu">::</span><span class="fu"><a href="https://funky.rpkg.dev/reference/config_val.html" class="external-link">config_val</a></span><span class="op">(</span><span class="st">"token"</span><span class="op">)</span>,</span>
 <span>  max_tries <span class="op">=</span> <span class="fl">3L</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -124,10 +124,10 @@ Maximum number of request attempts in case of an HTTP error. An integerish scala
 <span class="r-in"><span>  <span class="fu">httr2</span><span class="fu">::</span><span class="fu"><a href="https://httr2.r-lib.org/reference/req_perform.html" class="external-link">req_perform</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">httr2</span><span class="fu">::</span><span class="fu"><a href="https://httr2.r-lib.org/reference/resp_body_raw.html" class="external-link">resp_body_json</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $version</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "17.9.0-pre"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "17.10.0-pre"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $revision</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "0363009894f"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "61181022ac3"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $kas</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $kas$enabled</span>
@@ -140,7 +140,7 @@ Maximum number of request attempts in case of an HTTP error. An integerish scala
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "https://kas.gitlab.com/k8s-proxy"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $kas$version</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "17.9.0-rc2+737917b4ec3db719fbed640d2c9cbd9be6e38b05"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "17.10.0-rc1+c467a18d6d952c904fa033df2ea5b92aba98e8dc"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $enterprise</span>
@@ -157,7 +157,7 @@ Maximum number of request attempts in case of an HTTP error. An integerish scala
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.9000.</p>
 </div>
 
     </footer></div>

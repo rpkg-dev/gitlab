@@ -8,10 +8,10 @@ file_meta(
   path,
   attribute = c("file_name", "file_path", "size", "encoding", "content_sha256", "ref",
     "blob_id", "commit_id", "last_commit_id", "execute_filemode"),
-  id_project = pal::pkg_config_val("id_project"),
+  id_project = funky::config_val("id_project"),
   ref = "HEAD",
-  base_url = pal::pkg_config_val("base_url"),
-  token = pal::pkg_config_val("token"),
+  base_url = funky::config_val("base_url"),
+  token = funky::config_val("token"),
   max_tries = 3L
 )
 }

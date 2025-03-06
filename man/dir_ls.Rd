@@ -6,12 +6,12 @@
 \usage{
 dir_ls(
   path = "",
-  id_project = pal::pkg_config_val("id_project"),
+  id_project = funky::config_val("id_project"),
   recurse = FALSE,
   ref = project_default_branch(id_project = id_project, base_url = base_url, token =
     token, max_tries = max_tries),
-  base_url = pal::pkg_config_val("base_url"),
-  token = pal::pkg_config_val("token"),
+  base_url = funky::config_val("base_url"),
+  token = funky::config_val("token"),
   max_tries = 3L
 )
 }

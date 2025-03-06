@@ -5,12 +5,12 @@
 \title{Build GitLab repository URL}
 \usage{
 build_url(
-  id_project = pal::pkg_config_val("id_project"),
+  id_project = funky::config_val("id_project"),
   ...,
   ref = "HEAD",
   force_branch_ref = FALSE,
-  base_url = pal::pkg_config_val("base_url"),
-  token = pal::pkg_config_val("token"),
+  base_url = funky::config_val("base_url"),
+  token = funky::config_val("token"),
   max_tries = 3L
 )
 }

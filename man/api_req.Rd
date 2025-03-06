@@ -11,8 +11,8 @@ api_req(
   url_params = NULL,
   body_json = NULL,
   auto_unbox = TRUE,
-  base_url = pal::pkg_config_val("base_url"),
-  token = pal::pkg_config_val("token"),
+  base_url = funky::config_val("base_url"),
+  token = funky::config_val("token"),
   max_tries = 3L
 )
 }
