@@ -43,8 +43,8 @@ api_req <- function(path,
                     url_params = NULL,
                     body_json = NULL,
                     auto_unbox = TRUE,
-                    base_url = pal::pkg_config_val("base_url"),
-                    token = pal::pkg_config_val("token"),
+                    base_url = funky::config_val("base_url"),
+                    token = funky::config_val("token"),
                     max_tries = 3L) {
   
   checkmate::assert_string(path)
@@ -110,12 +110,12 @@ api_req <- function(path,
 #' @examples
 #' gitlab::build_url(id_project = 64767928,
 #'                   "Rmd/gitlab.Rmd")
-build_url <- function(id_project = pal::pkg_config_val("id_project"),
+build_url <- function(id_project = funky::config_val("id_project"),
                       ...,
                       ref = "HEAD",
                       force_branch_ref = FALSE,
-                      base_url = pal::pkg_config_val("base_url"),
-                      token = pal::pkg_config_val("token"),
+                      base_url = funky::config_val("base_url"),
+                      token = funky::config_val("token"),
                       max_tries = 3L) {
   
   checkmate::assert_string(ref,
@@ -147,9 +147,9 @@ build_url <- function(id_project = pal::pkg_config_val("id_project"),
 #'
 #' @examples
 #' gitlab::project(id_project = 64767928) |> names()
-project <- function(id_project = pal::pkg_config_val("id_project"),
-                    base_url = pal::pkg_config_val("base_url"),
-                    token = pal::pkg_config_val("token"),
+project <- function(id_project = funky::config_val("id_project"),
+                    base_url = funky::config_val("base_url"),
+                    token = funky::config_val("token"),
                     max_tries = 3L) {
   
   checkmate::assert_int(id_project)
@@ -175,9 +175,9 @@ project <- function(id_project = pal::pkg_config_val("id_project"),
 #'
 #' @examples
 #' gitlab::project_default_branch(id_project = 64767928)
-project_default_branch <- function(id_project = pal::pkg_config_val("id_project"),
-                                   base_url = pal::pkg_config_val("base_url"),
-                                   token = pal::pkg_config_val("token"),
+project_default_branch <- function(id_project = funky::config_val("id_project"),
+                                   base_url = funky::config_val("base_url"),
+                                   token = funky::config_val("token"),
                                    max_tries = 3L) {
   project(id_project = id_project,
           base_url = base_url,
@@ -214,14 +214,14 @@ project_default_branch <- function(id_project = pal::pkg_config_val("id_project"
 #'   dplyr::filter(stringr::str_detect(name, "\\.xml$")) |>
 #'   dplyr::pull("path")
 dir_ls <- function(path = "",
-                   id_project = pal::pkg_config_val("id_project"),
+                   id_project = funky::config_val("id_project"),
                    recurse = FALSE,
                    ref = project_default_branch(id_project = id_project,
                                                 base_url = base_url,
                                                 token = token,
                                                 max_tries = max_tries),
-                   base_url = pal::pkg_config_val("base_url"),
-                   token = pal::pkg_config_val("token"),
+                   base_url = funky::config_val("base_url"),
+                   token = funky::config_val("token"),
                    max_tries = 3L) {
   
   checkmate::assert_string(path)
@@ -271,7 +271,7 @@ dir_ls <- function(path = "",
 #' gitlab::dir_delete(path = "docs/dev",
 #'                    id_project = 64767928)}
 dir_delete <- function(path,
-                       id_project = pal::pkg_config_val("id_project"),
+                       id_project = funky::config_val("id_project"),
                        start_branch = project_default_branch(id_project = id_project,
                                                              base_url = base_url,
                                                              token = token,
@@ -285,8 +285,8 @@ dir_delete <- function(path,
                        incl_stats = TRUE,
                        force = FALSE,
                        last_commit_id = NULL,
-                       base_url = pal::pkg_config_val("base_url"),
-                       token = pal::pkg_config_val("token"),
+                       base_url = funky::config_val("base_url"),
+                       token = funky::config_val("token"),
                        max_tries = 3L) {
   dir_ls(path = path,
          id_project = id_project,
@@ -332,10 +332,10 @@ dir_delete <- function(path,
 #' gitlab::dir_exists(path = "no/no/nope",
 #'                    id_project = 64767928)
 dir_exists <- function(path,
-                       id_project = pal::pkg_config_val("id_project"),
+                       id_project = funky::config_val("id_project"),
                        ref = NULL,
-                       base_url = pal::pkg_config_val("base_url"),
-                       token = pal::pkg_config_val("token"),
+                       base_url = funky::config_val("base_url"),
+                       token = funky::config_val("token"),
                        max_tries = 3L) {
   
   checkmate::assert_string(path)
@@ -386,11 +386,11 @@ dir_exists <- function(path,
 #'                   ref = "HEAD")
 file_req <- function(method,
                      path,
-                     id_project = pal::pkg_config_val("id_project"),
+                     id_project = funky::config_val("id_project"),
                      ref = NULL,
                      body_json = NULL,
-                     base_url = pal::pkg_config_val("base_url"),
-                     token = pal::pkg_config_val("token"),
+                     base_url = funky::config_val("base_url"),
+                     token = funky::config_val("token"),
                      max_tries = 3L) {
   
   checkmate::assert_string(path)
@@ -441,10 +441,10 @@ file_meta <- function(path,
                                     "commit_id",
                                     "last_commit_id",
                                     "execute_filemode"),
-                      id_project = pal::pkg_config_val("id_project"),
+                      id_project = funky::config_val("id_project"),
                       ref = "HEAD",
-                      base_url = pal::pkg_config_val("base_url"),
-                      token = pal::pkg_config_val("token"),
+                      base_url = funky::config_val("base_url"),
+                      token = funky::config_val("token"),
                       max_tries = 3L) {
   
   attribute <- rlang::arg_match(attribute)
@@ -489,10 +489,10 @@ file_meta <- function(path,
 #'                      ref = "9c2fe95c63fef013205fe5ff64dd30494579f3f2") |>
 #'   cat()
 file_content <- function(path,
-                         id_project = pal::pkg_config_val("id_project"),
+                         id_project = funky::config_val("id_project"),
                          ref = NULL,
-                         base_url = pal::pkg_config_val("base_url"),
-                         token = pal::pkg_config_val("token"),
+                         base_url = funky::config_val("base_url"),
+                         token = funky::config_val("token"),
                          max_tries = 3L) {
   result <-
     file_req(method = "GET",
@@ -535,10 +535,10 @@ file_content <- function(path,
 #'                   id_project = 64767928,
 #'                   ref = "9c2fe95c63fef013205fe5ff64dd30494579f3f2")
 file_full <- function(path,
-                      id_project = pal::pkg_config_val("id_project"),
+                      id_project = funky::config_val("id_project"),
                       ref = "HEAD",
-                      base_url = pal::pkg_config_val("base_url"),
-                      token = pal::pkg_config_val("token"),
+                      base_url = funky::config_val("base_url"),
+                      token = funky::config_val("token"),
                       max_tries = 3L) {
   
   # omitting `ref` results in HTTP 400 Bad Request
@@ -603,7 +603,7 @@ file_full <- function(path,
 #'                    id_project = 64767928)}
 file_write <- function(content,
                        path,
-                       id_project = pal::pkg_config_val("id_project"),
+                       id_project = funky::config_val("id_project"),
                        start_branch = project_default_branch(id_project = id_project,
                                                              base_url = base_url,
                                                              token = token,
@@ -623,8 +623,8 @@ file_write <- function(content,
                                                   base_url = base_url,
                                                   token = token,
                                                   max_tries = max_tries),
-                       base_url = pal::pkg_config_val("base_url"),
-                       token = pal::pkg_config_val("token"),
+                       base_url = funky::config_val("base_url"),
+                       token = funky::config_val("token"),
                        max_tries = 3L,
                        quiet = FALSE) {
   
@@ -770,7 +770,7 @@ file_write <- function(content,
 #'                     id_project = 64767928)}
 file_create <- function(content,
                         path,
-                        id_project = pal::pkg_config_val("id_project"),
+                        id_project = funky::config_val("id_project"),
                         start_branch = project_default_branch(id_project = id_project,
                                                               base_url = base_url,
                                                               token = token,
@@ -781,8 +781,8 @@ file_create <- function(content,
                         author_name = NULL,
                         encoding = c("text", "base64"),
                         execute_filemode = FALSE,
-                        base_url = pal::pkg_config_val("base_url"),
-                        token = pal::pkg_config_val("token"),
+                        base_url = funky::config_val("base_url"),
+                        token = funky::config_val("token"),
                         max_tries = 3L) {
   
   checkmate::assert_string(content)
@@ -836,7 +836,7 @@ file_create <- function(content,
 #'                     id_project = 64767928)}
 file_update <- function(content,
                         path,
-                        id_project = pal::pkg_config_val("id_project"),
+                        id_project = funky::config_val("id_project"),
                         start_branch = project_default_branch(id_project = id_project,
                                                               base_url = base_url,
                                                               token = token,
@@ -848,8 +848,8 @@ file_update <- function(content,
                         encoding = c("text", "base64"),
                         execute_filemode = FALSE,
                         last_commit_id = NULL,
-                        base_url = pal::pkg_config_val("base_url"),
-                        token = pal::pkg_config_val("token"),
+                        base_url = funky::config_val("base_url"),
+                        token = funky::config_val("token"),
                         max_tries = 3L) {
   
   checkmate::assert_string(content)
@@ -902,7 +902,7 @@ file_update <- function(content,
 #' gitlab::file_delete(path = "test.md",
 #'                     id_project = 64767928)}
 file_delete <- function(path,
-                        id_project = pal::pkg_config_val("id_project"),
+                        id_project = funky::config_val("id_project"),
                         start_branch = project_default_branch(id_project = id_project,
                                                               base_url = base_url,
                                                               token = token,
@@ -912,8 +912,8 @@ file_delete <- function(path,
                         author_email = NULL,
                         author_name = NULL,
                         last_commit_id = NULL,
-                        base_url = pal::pkg_config_val("base_url"),
-                        token = pal::pkg_config_val("token"),
+                        base_url = funky::config_val("base_url"),
+                        token = funky::config_val("token"),
                         max_tries = 3L) {
   
   checkmate::assert_string(start_branch,
@@ -962,7 +962,7 @@ file_delete <- function(path,
 #' gitlab::files_delete(paths = c("test.md", "test_old.md"),
 #'                      id_project = 64767928)}
 files_delete <- function(paths,
-                         id_project = pal::pkg_config_val("id_project"),
+                         id_project = funky::config_val("id_project"),
                          start_branch = project_default_branch(id_project = id_project,
                                                                base_url = base_url,
                                                                token = token,
@@ -976,8 +976,8 @@ files_delete <- function(paths,
                          incl_stats = TRUE,
                          force = FALSE,
                          last_commit_id = NULL,
-                         base_url = pal::pkg_config_val("base_url"),
-                         token = pal::pkg_config_val("token"),
+                         base_url = funky::config_val("base_url"),
+                         token = funky::config_val("token"),
                          max_tries = 3L) {
   paths |>
     purrr::map(\(path) file_commit_action(path = path,
@@ -1018,10 +1018,10 @@ files_delete <- function(paths,
 #' gitlab::file_exists(path = "test.md",
 #'                     id_project = 64767928)
 file_exists <- function(path,
-                        id_project = pal::pkg_config_val("id_project"),
+                        id_project = funky::config_val("id_project"),
                         ref = "HEAD",
-                        base_url = pal::pkg_config_val("base_url"),
-                        token = pal::pkg_config_val("token"),
+                        base_url = funky::config_val("base_url"),
+                        token = funky::config_val("token"),
                         max_tries = 3L) {
   
   # omitting `ref` results in HTTP 400 Bad Request
@@ -1083,7 +1083,7 @@ file_exists <- function(path,
 #'   purrr::list_rbind() |>
 #'   commit_files(id_project = 64767928)}
 commit_files <- function(actions,
-                         id_project = pal::pkg_config_val("id_project"),
+                         id_project = funky::config_val("id_project"),
                          start_branch = project_default_branch(id_project = id_project,
                                                                base_url = base_url,
                                                                token = token,
@@ -1096,8 +1096,8 @@ commit_files <- function(actions,
                          author_name = NULL,
                          incl_stats = TRUE,
                          force = FALSE,
-                         base_url = pal::pkg_config_val("base_url"),
-                         token = pal::pkg_config_val("token"),
+                         base_url = funky::config_val("base_url"),
+                         token = funky::config_val("token"),
                          max_tries = 3L,
                          quiet = FALSE) {
   
