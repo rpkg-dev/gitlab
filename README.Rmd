@@ -41,8 +41,8 @@ pkgsnip::md_snip(id = "pkgdown_site") %>%
   pal::cat_lines()
 ```
 
-[^1]: Thanks to [pal's canonicalized way to package configuration](https://pal.rpkg.dev/reference/#package-configuration), setting necessary state globally like
-    the API's base URL and access token is still easy for users and transparent for developers.
+[^1]: Thanks to [funky's canonicalized way to package configuration](https://funky.rpkg.dev/), setting necessary state globally like the API's base URL and
+    access token is still easy for users and transparent for developers.
 
 ## Installation
 
