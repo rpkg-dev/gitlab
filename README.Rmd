@@ -68,8 +68,12 @@ pkgsnip::md_snip(id = "pkg_usage") %>%
 #| label: pkg-config
 #| child: !expr pkgsnip::snip_path("funky-config.Rmd")
 ```
-
 ## Development
+
+```{r}
+#| label: pkg-deepwiki
+#| child: !expr pkgsnip::snip_path("pkg-deepwiki.Rmd")
+```
 
 ### R Markdown format
 
