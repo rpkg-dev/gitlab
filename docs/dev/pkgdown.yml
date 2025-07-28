@@ -1,8 +1,8 @@
-pandoc: 3.7.0.1
+pandoc: 3.7.0.2
 pkgdown: 2.1.3
 pkgdown_sha: ~
 articles: {}
-last_built: 2025-05-27T13:05Z
+last_built: 2025-07-28T21:26Z
 urls:
   reference: https://gitlab.rpkg.dev/reference
   article: https://gitlab.rpkg.dev/articles
