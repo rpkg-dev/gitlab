@@ -75,8 +75,7 @@ api_req <- function(path,
   checkmate::assert_count(max_tries,
                           positive = TRUE)
   # tweak path slashes
-  path %<>% stringr::str_replace(pattern = "^/+",
-                                 replacement = "")
+  path %<>% stringr::str_remove(pattern = "^/+")
   base_url %<>% stringr::str_replace(pattern = "(/+)?$",
                                      replacement = "/")
   # convert non-chr URL param vals to JSON for convenience (`httr2::req_url_query()` just forwards everything as chr)
